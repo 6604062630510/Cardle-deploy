@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
-
+import fullfav from "../assets/fill-fav-icon.png";
 interface NavbarProps {
     brandName: string;
     imageSrcPath: string;
@@ -98,7 +98,7 @@ function Navbar({ brandName, imageSrcPath, navItems }: NavbarProps) {
                                 Me
                             </button>
                             <Link to="myfav" className="btn btn-custom me-2" role="button">
-  <img src="/fill-fav-icon.png" alt="Favorite" style={{ width: '30px' }} />
+  <img src={fullfav} alt="Favorite" style={{ width: '30px' }} />
 </Link>
 
                         </>
