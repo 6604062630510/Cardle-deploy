@@ -54,21 +54,39 @@ function MyDeal() {
     fetchMyDeals();
   }, [currentUser, typeFilter]);
 
-  const getAvailableStatuses = (type: string) => {
-    switch (type) {
-      case "post-trade":
-        return ["posted", "dealed", "completed"];
-      case "post-sell":
-        return ["waiting","selling", "sold", "completed"];
-      case "offer":
-        return ["offered", "dealed", "rejected", "completed"];
-      case "shop":
-        return ["waiting", "dealed", "completed", "rejected"];
-      default:
-        return [];
-    }
+  const statusMap: Record<string, Record<string, string>> = {
+    "post-trade": {
+      "posted": "โพสต์แล้ว",
+      "dealed": "ดีลแล้ว",
+      "completed": "การแลกเปลี่ยนสมบูรณ์",
+    },
+    "post-sell": {
+      "selling": "กำลังขาย",
+      "sold": "ขายแล้ว",
+      "completed": "การขายสมบูรณ์",
+    },
+    "offer": {
+      "waiting": "รอผู้ขายตัดสินใจ",
+      "dealed": "ดีลแล้ว",
+      "rejected": "เอาไว้ครั้งหน้านะ",
+      "completed": "การแลกเปลี่ยนสมบูรณ์",
+    },
+    "shop": {
+      "waiting": "รอผู้ขายยืนยัน",
+      "dealed": "ผู้ขายยืนยันแล้ว",
+      "completed": "การขายสมบูรณ์",
+      "rejected": "เอาไว้ครั้งหน้านะ",
+    },
   };
-
+  
+  const getAvailableStatuses = (type: string) => {
+    return Object.values(statusMap[type] || {});
+  };
+  
+  const mapStatusToThai = (type: string, status: string) => {
+    return statusMap[type]?.[status] || status;
+  };
+  
   const filterByStatus = (data: any[]) => {
     if (statusFilter === "all") return data;
     return data.filter((item) => item.status === statusFilter);
@@ -108,11 +126,10 @@ function MyDeal() {
               setStatusFilter("all");
             }}
           >
-            <option value="all">ทั้งหมด</option>
-            <option value="post-trade">My Post Trade</option>
-            <option value="offer">My Offer</option>
-            <option value="post-sell">My Post Sell</option>
-            <option value="shop">My Shopping</option>
+            <option value="post-trade">โพสต์แลกเปลี่ยนการ์ดของฉัน</option>
+            <option value="offer">ข้อเสนอของฉัน</option>
+            <option value="post-sell">โพสต์ขายการ์ดของฉัน</option>
+            <option value="shop">คำสั่งซื้อของฉัน</option>
           </select>
         </div>
         <div className="col-md-6 mb-2">
@@ -129,6 +146,7 @@ function MyDeal() {
               </option>
             ))}
           </select>
+
         </div>
       </div>
 
@@ -170,7 +188,8 @@ function MyDeal() {
     style={{ width: "150px", height: "120px", objectFit: "cover" }}
   />
 ) : (
-  <p>No image available</p>
+  <p>● {mapStatusToThai(post.type, post.status)}</p>
+
 )}
 
     </div>
@@ -178,11 +197,13 @@ function MyDeal() {
   <div className="d-flex justify-content-between align-items-center">
     <div>
     <h5 className="card-title">
-
-    โพสต์ : {post.title?.length > 70
-      ? post.title.slice(0, 67) + "..."
-      : post.title}
+  {post.type === "shop" ? (
+    <>โพสต์ : {post.title?.length > 70 ? post.title.slice(0, 67) + "..." : post.title}</>
+  ) : (
+    <>{post.title?.length > 70 ? post.title.slice(0, 67) + "..." : post.title}</>
+  )}
 </h5>
+
 
 
 <p className="card-text">
@@ -232,7 +253,7 @@ function MyDeal() {
         <button className="btn btn-warning me-2">Tracking</button>
       </Link>
     )} 
-    {post.status !== "waiting" && post.status !== "selling" && post.type === "sell" ? (
+    {post.status !== "selling" && post.type === "sell" ? (
       <Link to={`/shop/product-tracking/${post.id_post}`} className="text-decoration-none">
       <button className="btn btn-warning me-2">Tracking</button>
     </Link>
