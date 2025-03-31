@@ -214,8 +214,7 @@ const toggleFavorite = async (id_post: number) => {
           height: '500px',
           objectFit: 'cover',
           cursor: 'pointer',
-          border: '2px solid #ddd',
-          borderRadius: '8px',
+          
         }}
         onClick={() => openModal(product.post_img_i_have[0])}
       />
@@ -325,8 +324,6 @@ const toggleFavorite = async (id_post: number) => {
                         width: '500px',
                         height: '350px',
                         overflow: 'hidden',
-                        border: '2px solid #ddd',
-                        borderRadius: '8px',
                         marginBottom: '10px',
                       }}
                     >
@@ -355,8 +352,10 @@ const toggleFavorite = async (id_post: number) => {
                 
 
               {product.post_img_i_want && product.post_img_i_want.length > 0 && (
-                
+                <>
+                <div><h4 className="ms-5">{product.by_user.acc_name} กำลังมองหา 👀</h4></div>
                 <div className="d-flex justify-content-center mt-5 mb-5" style={{ gap: '150px' }}>
+                  
                   {product.post_img_i_want.slice(0, 2).map((image: string, index: number) => (
                     <div
                       key={index}
@@ -365,11 +364,10 @@ const toggleFavorite = async (id_post: number) => {
                         width: '500px',
                         height: '350px',
                         overflow: 'hidden',
-                        border: '2px solid #ddd',
-                        borderRadius: '8px',
+
                         marginBottom: '10px',
                       }}
-                    > <h4 className="ms-5">{product.by_user.acc_name} กำลังมองหา 👀</h4>
+                    > 
                       <img
                         src={image}
                         alt={`Wanted Image ${index + 1}`}
@@ -385,6 +383,7 @@ const toggleFavorite = async (id_post: number) => {
                     </div>
                   ))}
                 </div>
+                </>
     )}
             </div>
           )}
