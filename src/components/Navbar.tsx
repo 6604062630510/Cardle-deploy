@@ -90,7 +90,7 @@ function Navbar({ brandName, imageSrcPath, navItems }: NavbarProps) {
                                 Logout
                             </button>
 
-                            <Link to="mailto:support@example.com?subject=โปรดรายงานปัญหาของคุณ&body=เรียนทีมงาน Cardle,%0A%0Aโปรดระบุปัญหาของคุณให้ละเอียด พร้อมแนบรูปภาพที่เกี่ยวข้อง (ถ้ามี) เพื่อให้เราสามารถตรวจสอบและช่วยเหลือคุณได้อย่างรวดเร็ว.%0A%0Aขอบคุณค่ะ" className="btn btn-custom-red me-2" role="button">
+                            <Link to="mailto:cardle.help@gmail.com?subject=โปรดรายงานปัญหาของคุณ&body=เรียนทีมงาน Cardle,%0A%0Aโปรดระบุปัญหาของคุณให้ละเอียด พร้อมแนบรูปภาพที่เกี่ยวข้อง (ถ้ามี) เพื่อให้เราสามารถตรวจสอบและช่วยเหลือคุณได้อย่างรวดเร็ว.%0A%0Aขอบคุณค่ะ" className="btn btn-custom-red me-2" role="button">
                                 report
                             </Link>
                             {currentUser.role === "admin" && currentUser.status === "approved" && (
