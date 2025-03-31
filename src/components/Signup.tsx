@@ -5,11 +5,11 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import imgSignUp from "../assets/signup.png";
 import { Link } from "react-router-dom";
-
+import { useNavigate} from 'react-router-dom';
 function Signup() {
   const [isOldEnough, setIsOldEnough] = useState(false);
   const [acceptPolicy, setAcceptPolicy] = useState(false);
-  
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -208,6 +208,7 @@ if (fullMatchUser) {
 
           if (updateError) throw updateError;
           toast.success("ส่งคำขอสมัครสมาชิกใหม่สำเร็จ! รอการอนุมัติจากแอดมิน");
+          navigate("/signin")
           return;
         }
 
