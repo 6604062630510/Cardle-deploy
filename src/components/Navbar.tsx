@@ -103,7 +103,7 @@ function Navbar({ brandName, imageSrcPath, navItems }: NavbarProps) {
                                 Me
                             </button>
                             <Link to="myfav" className="btn btn-custom me-2" role="button">
-                                <img src={fullfav} alt="Favorite" style={{ width: '30px' }} />
+                                <img src={fullfav} alt="Favorite" style={{ width: '25px' }} />
                             </Link>
 
                         </>

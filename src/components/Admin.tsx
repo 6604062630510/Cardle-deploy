@@ -81,7 +81,7 @@ function Admin() {
       setError(error.message);
     }
   };
-// @ts-ignore
+
   const rejecteUser = async (id: string, email: string) => {
     try {
       const { error } = await supabase
@@ -142,6 +142,68 @@ function Admin() {
     }
   };
 
+  const addToAdmin = async (id: string) => {
+    const confirmation = window.confirm("คุณแน่ใจหรือไม่ว่าจะให้สถานะแอดมินกับผู้ใช้คนนี้?");
+    if (!confirmation) return;
+  
+
+    const finalConfirmation = window.confirm(
+      "คุณแน่ใจจริง ๆ ใช่ไหม ถ้าแน่ใจครั้งนี้ให้กดยกเลิก"
+    );
+    if (finalConfirmation) return;
+
+    const superfinalConfirmation = window.confirm(
+      "ถ้าคุณแน่ใจจริง ๆ กดยืนยันเป็นครั้งสุดท้าย"
+    );
+    if (!superfinalConfirmation) return;
+    try {
+      const { error } = await supabase
+        .from("Users")
+        .update({ role: "admin" })
+        .eq("id", id);
+
+      if (error) throw error;
+
+      setUsers(
+        users.map((user) =>
+          user.id === id ? { ...user, role: "admin" } : user
+        )
+      );
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
+  const deleteAdmin = async (id: string) => {
+    const confirmation = window.confirm("คุณแน่ใจหรือไม่ว่าจะยกเลิกสถานะแอดมินของผู้ใช้คนนี้?");
+    if (!confirmation) return;
+  
+
+    const finalConfirmation = window.confirm(
+      "คุณแน่ใจจริง ๆ ใช่ไหม ถ้าแน่ใจครั้งนี้ให้กดยกเลิก"
+    );
+    if (finalConfirmation) return;
+
+    const superfinalConfirmation = window.confirm(
+      "ถ้าคุณแน่ใจจริง ๆ กดยืนยันเป็นครั้งสุดท้าย"
+    );
+    if (!superfinalConfirmation) return;
+    try {
+      const { error } = await supabase
+        .from("Users")
+        .update({ role: "user" })
+        .eq("id", id);
+
+      if (error) throw error;
+
+      setUsers(
+        users.map((user) =>
+          user.id === id ? { ...user, role: "user" } : user
+        )
+      );
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
 
   // ฟังก์ชันลบผู้ใช้
  /* const deleteUser = async (id: string) => {
@@ -327,21 +389,46 @@ function Admin() {
                     </button>
                   )}
                   {user.status === "approved" && (
+                  <>
                     <button
                       onClick={() => banUser(user.id)}
                       className="btn btn-outline-danger btn-sm m-1"
                     >
-                      ban
+                      Ban
                     </button>
-                  )}
+
+                    {user.role === "user" ? (
+
+                    <button
+                      onClick={() => addToAdmin(user.id)}
+                      className="btn btn-outline-dark ms-4 btn-sm m-1"
+                    >
+                      Add to Admin
+                    </button>
+
+                    ) : (<button
+                      onClick={() => deleteAdmin(user.id)}
+                      className="btn btn-outline-dark ms-4 btn-sm m-1"
+                    >
+                      Cancel Admin
+                      
+                    </button>)}
+
+                    
+                  </>
+                )}
+
                   {user.status === "banned" && (
+
                     <button
                       onClick={() => unbanUser(user.id)}
                       className="btn btn-outline-success btn-sm m-1"
                     >
                       unban
                     </button>
+
                   )}
+                  
                   {/*<button
                     onClick={() => deleteUser(user.id)}
                     className="btn btn-secondary btn-sm m-1"
