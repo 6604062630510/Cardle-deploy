@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../database/client'; 
 import { Link, useNavigate } from "react-router-dom"; 
 import TradeComments from "../components/TradeComments";
-
+import nofav from "../assets/emt-fav-icon.png";
+import fullfav from "../assets/fill-fav-icon.png";
 function ProductTradeDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState<any>(null);
@@ -284,8 +285,8 @@ const toggleFavorite = async (id_post: number) => {
       
     >
       {currentUser && currentUser.fav_post_trade && currentUser.fav_post_trade.includes(product.id_post)
-        ? <img src="/fill-fav-icon.png" alt="Remove Fav" style={{ width: '30px' }} />
-        : <img src="/emt-fav-icon.png" alt="Add Fav" style={{ width: '30px' }} />}
+        ? <img src={fullfav} alt="Remove Fav" style={{ width: '30px' }} />
+        : <img src={nofav} alt="Add Fav" style={{ width: '30px' }} />}
     </button>
       <button className="btn btn-detail" onClick={openOfferModal} style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '2px' }}  >OFFER</button>
     
@@ -416,23 +417,25 @@ const toggleFavorite = async (id_post: number) => {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">{currentUser.acc_name} กำลังส่งข้อเสนอแลกเปลี่ยน</h5>
-                  <button type="button" className="close" onClick={closeOfferModal}>×</button>
                 </div>
                 <div className="modal-body">
                   <div className="form-group">
-                    <label>รายละเอียดการ์ดของ {currentUser.acc_name}</label>
+                  <div className="mb-3">
+                    <label>หัวข้อ</label>
                     <textarea
                       className="form-control"
                       value={offerTitle}
                       onChange={(e) => setOfferTitle(e.target.value)}
                       required
-                    />
+                    /></div>
+                    <div>
+                    <label>รายละเอียดการ์ดของ {currentUser.acc_name}</label>
                     <textarea
                       className="form-control"
                       value={offerDescription}
                       onChange={(e) => setOfferDescription(e.target.value)}
                       required
-                    />
+                    /></div>
                   </div>
                   <div className="form-group mt-3">
                     <label>อัปโหลดรูป</label>

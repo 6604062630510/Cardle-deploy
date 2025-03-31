@@ -82,9 +82,10 @@ function Navbar({ brandName, imageSrcPath, navItems }: NavbarProps) {
                         ))}
                     </ul>
 
-
+                    <div className="align-middle">
                     {currentUser ? (
                         <>
+                        
                         <button className="btn btn-custom me-2" onClick={handleLogout}>
                                 Logout
                             </button>
@@ -110,7 +111,7 @@ function Navbar({ brandName, imageSrcPath, navItems }: NavbarProps) {
                     <Link to="create-post" className="btn btn-custom" role="button">
                         Post
                     </Link>
-                  
+                    </div>
                 </div>
             </div>
         </nav>

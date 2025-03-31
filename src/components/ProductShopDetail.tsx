@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../database/client';
 import { useNavigate } from "react-router-dom"; 
 import ShopComments from './ShopComments';
-
+import fullfav from "../assets/fill-fav-icon.png";
 import { Link } from 'react-router-dom';
+import nofav from "../assets/emt-fav-icon.png";
 
 function ProductShopDetail() {
   const { id } = useParams(); // ดึง id จาก URL
@@ -258,8 +259,8 @@ const toggleFavorite = async (id_post: number) => {
 
     >
       {currentUser && currentUser.fav_post_sell && currentUser.fav_post_sell.includes(product.id_post)
-        ? <img src="/fill-fav-icon.png" alt="Remove Fav" style={{ width: '30px' }} />
-        : <img src="/emt-fav-icon.png" alt="Add Fav" style={{ width: '30px' }} />}
+        ? <img src={fullfav} alt="Remove Fav" style={{ width: '30px' }} />
+        : <img src={nofav} alt="Add Fav" style={{ width: '30px' }} />}
     </button>
       <button className="btn btn-detail" onClick={openBuyModal} style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '2px' }}  >BUY</button>
     
