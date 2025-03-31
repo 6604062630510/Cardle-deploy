@@ -34,7 +34,6 @@ function UserProfile() {
   const fetchUserPosts = async (username: string) => {
     setLoading(true);
     setNoPostsFound(false);
-
     const { data: userData, error: userError } = await supabase
       .from("Users")
       .select("*")
@@ -71,7 +70,7 @@ function UserProfile() {
                post_img_i_want,
                has_want,
                status,
-               Users:by_userid(acc_name, username)`
+               Users:by_userid(acc_name, username, status)`
       )
       .eq("by_userid", userId)
       .order("created_at", { ascending: false });
@@ -159,15 +158,12 @@ function UserProfile() {
         return;
       }
       let favPosts: number[] = currentUser.fav_post_trade || [];
-      let action = '';
+
       if (favPosts.includes(id_post)) {
-        // ถ้ามีอยู่แล้ว ให้ลบออก
         favPosts = favPosts.filter((item) => item !== id_post);
-        action = 'ลบออก';
       } else {
 
         favPosts.push(id_post);
-        action = 'เพิ่ม';
       }
       const { error } = await supabase
         .from('Users')
@@ -178,7 +174,7 @@ function UserProfile() {
         console.error('Error updating favorites:', error.message);
         alert('เกิดข้อผิดพลาดในการอัปเดตรายการโปรด');
       } else {
-        alert(`${action}สินค้าในรายการโปรดเรียบร้อยแล้ว`);
+
  
         const updatedUser = { ...currentUser, fav_post_trade: favPosts };
         setCurrentUser(updatedUser);
@@ -191,11 +187,7 @@ function UserProfile() {
 
   const totalCount = activeTab === "trade" ? tradeProducts.length : sellProducts.length;
 
-  return (
-
-
-    <div className="container mt-5 ">
-<div className="container mt-5 position-relative">
+  return<div className="container mt-5 position-relative">
   {currentUser && currentUser.username === username && (
     <button
       className="btn btn-warning position-absolute top-0 end-0 m-3"
@@ -205,82 +197,84 @@ function UserProfile() {
     </button>
   )}
 
-<div className="d-flex justify-content-center" >
-  <div className="text-center">
-    <h1 className="custom-topic mb-2 acc-name">
-      {user?.acc_name || username}
-    </h1>
-    <h2 className="custom-topic mb-3">
-      ( @{username} )
-    </h2>
+  <div className="d-flex justify-content-center">
+    <div className="text-center">
+      <h1 className="custom-topic mb-2 acc-name">
+        {user?.acc_name || username}
+      </h1>
+      <h2 className="custom-topic mb-3">
+        ( @{username} )
+      </h2>
 
+      {user?.about && (
+        <h4 className="about-text mx-auto px-3 mt-4 mb-4">
+          {user.about}
+        </h4>
+      )}
 
-    {user?.about && (
-      <h4 className="about-text mx-auto px-3 mt-4 mb-4">
-        {user.about}
-      </h4>
-    )}
+      {user?.status !== "approved" && (
+        <h2 className="text-danger fw-bold mx-auto px-3 mt-4 mb-4">
+          {username} ถูกแบน
+        </h2>
+      )}
+    </div>
   </div>
+
+  {user?.status === "approved" && (
+    <>
+      <div className="d-flex justify-content-start ms-5 container-fav mb-4">
+        <div className="btn-group justify-content-start" role="group">
+          <button
+            className={`btn ${
+              activeTab === "trade" ? "btn-fav-click" : "btn-fav-unclick"
+            } me-0`}
+            onClick={() => {
+              setActiveTab("trade");
+              setVisibleProducts(6);
+            }}
+          >
+            Trade Posts ({tradeProducts.length})
+          </button>
+          <button
+            className={`btn ${
+              activeTab === "sell" ? "btn-fav-click" : "btn-fav-unclick"
+            }`}
+            onClick={() => {
+              setActiveTab("sell");
+              setVisibleProducts(6);
+            }}
+          >
+            Sell Posts ({sellProducts.length})
+          </button>
+        </div>
+      </div>
+
+      {loading ? (
+        <p className="text-center">กำลังโหลด...</p>
+      ) : noPostsFound ? (
+        <p className="text-center">ไม่พบโพสต์ที่ตรงกับการค้นหา</p>
+      ) : (
+        <div className="row">
+          {visibleProductsArr.map((product: any) => (
+            <CardFactory key={product.id_post} {...product} />
+          ))}
+        </div>
+      )}
+
+      {visibleProducts < totalCount && (
+        <div className="text-center mt-3">
+          <button
+            className="btn btn-more btn-lg mb-5"
+            onClick={() => setVisibleProducts(visibleProducts + 6)}
+          >
+            Show More
+          </button>
+        </div>
+      )}
+    </>
+  )}
 </div>
 
-</div>
-
-
-
-
-
-<div className="d-flex justify-content-start ms-5 container-fav mb-4">
-<div className="btn-group  justify-content-start " role="group">
-  <button
-    className={`btn ${
-      activeTab === "trade" ? "btn-fav-click" : "btn-fav-unclick"
-    } me-0`}
-    onClick={() => {
-      setActiveTab("trade");
-      setVisibleProducts(6);
-    }}
-  >
-    Trade Posts ({tradeProducts.length})
-  </button>
-  <button
-    className={`btn ${
-      activeTab === "sell" ? "btn-fav-click" : "btn-fav-unclick"
-    } `}
-    onClick={() => {
-      setActiveTab("sell");
-      setVisibleProducts(6);
-    }}
-  >
-    Sell Posts ({sellProducts.length})
-  </button>
-  </div>
-</div>
-
-{loading ? (
-  <p className="text-center">กำลังโหลด...</p>
-) : noPostsFound ? (
-  <p className="text-center">ไม่พบโพสต์ที่ตรงกับการค้นหา</p>
-) : (
-  <div className="row">
-    {visibleProductsArr.map((product: any) => (
-
-       <CardFactory key={product.id_post} {...product} />
-
-    ))}
-  </div>
-)}
-{visibleProducts < totalCount && (
-  <div className="text-center mt-3">
-    <button
-      className="btn btn-more btn-lg mb-5"
-      onClick={() => setVisibleProducts(visibleProducts + 6)}
-    >
-      Show More
-    </button>
-  </div>
-)}
-</div>
-  );
 }
 
 export default UserProfile;

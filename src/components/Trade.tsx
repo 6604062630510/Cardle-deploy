@@ -45,8 +45,10 @@ const Trade = () => {
                post_img_i_want,
                has_want,
                status,
-               Users:by_userid(acc_name, username)`
-            )
+              Users:by_userid(acc_name, username, status)`
+        )
+        .eq("status", "posted")
+        
             .order('created_at', { ascending: false });
           if (filterType === 'hashtag') {
             if (hashtagIHave || hashtagIWant) {
@@ -95,7 +97,12 @@ const Trade = () => {
             if (data && data.length === 0) {
               setNoPostsFound(true);
             }
-            setProducts( data?.map((product: any) => ({
+
+            const approvedData = data.filter((product: any) => product.Users?.status === "approved");
+
+            
+            setProducts(
+              approvedData.map((product: any) => ({
                 type: 'trade',
                 id_post: product.id_post,
                 title: product.title,

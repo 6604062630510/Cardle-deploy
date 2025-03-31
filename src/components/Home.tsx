@@ -3,7 +3,7 @@ import headImg from "../assets/se-pic 2.svg";
 
 import { supabase } from "../database/client";
 import CardFactory from './CardFactory'; // Import Card component ที่รองรับทั้ง Sell และ Trade
-import { useNavigate} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 function Home() {
   const scrollRefTrade = useRef<HTMLDivElement>(null);  // สำหรับโพสต์เทรด
@@ -58,8 +58,9 @@ function Home() {
         post_img_i_want,
         has_want,
         status,
-        Users:by_userid(acc_name, username)
+        Users:by_userid(acc_name, username, status)
       `)
+      .eq("status", "posted")
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -68,8 +69,12 @@ function Home() {
       if (data && data.length === 0) {
         setNoPostsFound(true);
       }
+
+      const approvedData = data.filter((product: any) => product.Users?.status === "approved");
+
+        
       setTradeProducts(
-        data?.map((product: any) => ({
+        approvedData.map((product: any) => ({
           type: 'trade',
           id_post: product.id_post,
           title: product.title,
@@ -106,8 +111,9 @@ function Home() {
         price,
         post_img,
         status,
-        Users:by_userid(acc_name, username)
+        Users:by_userid(acc_name, username, status)
       `)
+      .eq("status", "selling")
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -116,8 +122,13 @@ function Home() {
       if (data && data.length === 0) {
         setNoPostsFound(true);
       }
+
+      const approvedData = data.filter((product: any) => product.Users?.status === "approved");
+
+  
+              
       setSellProducts(
-        data?.map((product: any) => ({
+        approvedData.map((product: any) => ({
           type: 'sell',
           id_post: product.id_post,
           title: product.title,
@@ -201,9 +212,9 @@ const onToggleFavorite = async (id_post: number) => {
                 <br />
                 Let’s make your collection grow!
               </p>
-              <a className="btn btn-dark-custom btn-lg" href="#">
-                Learn more
-              </a>
+              <Link className="btn btn-dark-custom btn-lg" to="/learnmore">
+  Learn more
+</Link>
             </div>
             <div className="col-md-6 text-center">
               <img src={headImg} alt="Shopping" className="img-fluid rounded" />

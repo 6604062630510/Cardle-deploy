@@ -89,6 +89,10 @@ function Navbar({ brandName, imageSrcPath, navItems }: NavbarProps) {
                         <button className="btn btn-custom me-2" onClick={handleLogout}>
                                 Logout
                             </button>
+
+                            <Link to="mailto:cardle.help@gmail.com?subject=Report%20Issue&body=Please%20describe%20the%20issue%20here" className="btn btn-custom-red me-2" role="button">
+                                report
+                            </Link>
                             {currentUser.role === "admin" && currentUser.status === "approved" && (
                                 <Link to="admin" className="btn btn-custom me-2" role="button">
                                 Admin
@@ -99,8 +103,8 @@ function Navbar({ brandName, imageSrcPath, navItems }: NavbarProps) {
                                 Me
                             </button>
                             <Link to="myfav" className="btn btn-custom me-2" role="button">
-  <img src={fullfav} alt="Favorite" style={{ width: '30px' }} />
-</Link>
+                                <img src={fullfav} alt="Favorite" style={{ width: '30px' }} />
+                            </Link>
 
                         </>
                     ) : (

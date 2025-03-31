@@ -39,8 +39,8 @@ function ProductShopDetail() {
             post_img,
             status,
 
-               by_user:by_userid(acc_name, username, contact),
-    dealed_user:dealed_userid(acc_name, username)`
+            by_user:by_userid(acc_name, username, contact, status),
+            dealed_user:dealed_userid(acc_name, username)`
         )
         .eq('id_post', id)
         .single();
@@ -229,7 +229,7 @@ const toggleFavorite = async (id_post: number) => {
 
         <div>
           <h4 className="text-dark mt-4">Contact</h4>
-          <h5 className="custom-line-height">{product.by_user.contact}</h5>
+          <h5 className="custom-line-height about-text">{product.by_user.contact}</h5>
         </div>
       
       
@@ -262,8 +262,18 @@ const toggleFavorite = async (id_post: number) => {
         ? <img src={fullfav} alt="Remove Fav" style={{ width: '30px' }} />
         : <img src={nofav} alt="Add Fav" style={{ width: '30px' }} />}
     </button>
-      <button className="btn btn-detail" onClick={openBuyModal} style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '2px' }}  >BUY</button>
-    
+     
+      {product.by_user?.status === "approved" ? (
+   <button className="btn btn-detail" onClick={openBuyModal} 
+   style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '2px' }}  >BUY</button>
+) : (
+  <button 
+    className="btn btn-danger" 
+    disabled
+    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '3px' }}>
+    เจ้าของโพสต์ถูกแบน
+  </button>
+)}
     
     </div>
     </div>

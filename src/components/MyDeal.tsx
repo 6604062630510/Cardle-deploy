@@ -55,12 +55,12 @@ function MyDeal() {
   }, [currentUser, typeFilter]);
 
   const statusMap: Record<string, Record<string, string>> = {
-    "post-trade": {
+    "trade": {
       "posted": "โพสต์แล้ว",
       "dealed": "ดีลแล้ว",
       "completed": "การแลกเปลี่ยนสมบูรณ์",
     },
-    "post-sell": {
+    "sell": {
       "selling": "กำลังขาย",
       "sold": "ขายแล้ว",
       "completed": "การขายสมบูรณ์",
@@ -88,15 +88,18 @@ function MyDeal() {
   };
   
   const filterByStatus = (data: any[]) => {
+    console.log("Status Filter:", statusFilter);
+    console.log("Available Statuses in Data:", data.map(item => item.status));
     if (statusFilter === "all") return data;
     return data.filter((item) => item.status === statusFilter);
   };
+  
 
   const getDataByType = () => {
     switch (typeFilter) {
-      case "post-trade":
+      case "trade":
         return postTrade;
-      case "post-sell":
+      case "sell":
         return postSell;
       case "offer":
         return myOffer;
@@ -140,12 +143,13 @@ function MyDeal() {
             onChange={(e) => setStatusFilter(e.target.value)}
           >
             <option value="all">ทั้งหมด</option>
-            {getAvailableStatuses(typeFilter).map((status) => (
-              <option key={status} value={status}>
-                {status}
+            {Object.keys(statusMap[typeFilter] || {}).map((statusKey) => (
+              <option key={statusKey} value={statusKey}>
+                {statusMap[typeFilter][statusKey]} {/* แสดงภาษาไทย */}
               </option>
             ))}
           </select>
+
 
         </div>
       </div>
@@ -188,8 +192,7 @@ function MyDeal() {
     style={{ width: "150px", height: "120px", objectFit: "cover" }}
   />
 ) : (
-  <p>● {mapStatusToThai(post.type, post.status)}</p>
-
+  <p>No image available</p>
 )}
 
     </div>
@@ -214,7 +217,7 @@ function MyDeal() {
 
 
 
-      <p>○ {post.status}</p>
+<p>● {mapStatusToThai(post.type, post.status)}</p>
 
 
       <small className="card-text">

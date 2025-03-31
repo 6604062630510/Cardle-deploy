@@ -27,23 +27,24 @@ const Shop = () => {
       const fetchProducts = async () => {
         setLoading(true);
         setNoPostsFound(false);
-  
         let query = supabase
-          .from('Posts-sell')
-          .select(
-            `id_post,
-             created_at,
-             title,
-             type,
-             flaw,
-             hashtag,
-             description,
-             price,
-             post_img,
-             status,
-             Users:by_userid(acc_name, username)`
-          )
-          .order('created_at', { ascending: false });
+        .from("Posts-sell")
+        .select(
+          `id_post,
+           created_at,
+           title,
+           type,
+           flaw,
+           hashtag,
+           description,
+           price,
+           post_img,
+           status,
+           Users:by_userid(acc_name, username, status)`
+        )
+        .eq("status", "selling")
+        .order("created_at", { ascending: false });
+      
   
         if (filterType === 'hashtag') {
 
@@ -88,7 +89,9 @@ const Shop = () => {
           if (data && data.length === 0) {
             setNoPostsFound(true);
           }
-          setProducts( data?.map((product: any) => ({
+
+          const approvedData = data.filter((product: any) => product.Users?.status === "approved");
+          setProducts( approvedData.map((product: any) => ({
             type: 'sell',
             id_post: product.id_post,
             title: product.title,

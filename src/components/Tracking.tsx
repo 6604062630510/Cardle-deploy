@@ -185,7 +185,7 @@ function Tracking() {
   }, [trackingData]);
 
 
-  if (loading) return <p>Loading tracking details...</p>;
+  if (loading) return <p className="text-center">Loading tracking details...</p>;
 
   return (
     <div className="container mt-5">

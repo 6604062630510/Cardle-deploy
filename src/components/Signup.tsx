@@ -230,6 +230,7 @@ if (fullMatchUser) {
           password: hashedPassword,
           Fname: formData.Fname,
           lastname: formData.lastname,
+          contact: formData.contact,
           role: "user",
           status: "waiting",
         },
@@ -262,7 +263,7 @@ if (fullMatchUser) {
             <div className="mb-3">
               <input
                 className="form-control"
-                placeholder="Account name"
+                placeholder="Account name เช่น มัมหมีน้องเจโน่"
                 name="accname"
                 onChange={handleChange}
               />

@@ -9,7 +9,7 @@ import imagePath from "./assets/LogoCardle.png";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Admin from "./components/Admin";
-
+import LearnMore from "./components/LearnMore";
 import CreatePost from "./components/Create-post";
 import ProductTradeDetail from "./components/ProductTradeDetail";
 import MyDeal from "./components/MyDeal";
@@ -22,6 +22,7 @@ import Fav from "./components/Fav";
 import UserProfile from "./components/UserProfile";
 import EditPro from "./components/EditPro";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import Report from "./components/Report";
 
 function PageWrapper() {
   const location = useLocation();
@@ -53,6 +54,8 @@ function PageWrapper() {
     pageClass = "signin-page";
   } else if (location.pathname === "/privacy-policy" || location.pathname === "/signup") {
     pageClass = "privacy-policy-page";
+  }else if (location.pathname === "/learnmore") {
+    pageClass = "learn-page"
   }
   
   let items = ["Home", "Trade", "Shop", "My Deal"];
@@ -79,6 +82,8 @@ function PageWrapper() {
         <Route path="/edit-profile/:username" element={<EditPro/>} />
         <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
         <Route path="/mydeal" element={<MyDeal/>}/>
+        <Route path="/learnmore" element={<LearnMore/>}/>
+        <Route path="/report" element={<Report/>}/>
       </Routes>
     </div>
   );

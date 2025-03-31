@@ -48,8 +48,10 @@ function Fav() {
         post_img_i_want,
         has_want,
         status,
-        Users:by_userid(acc_name, username)`
-      )
+       Users:by_userid(acc_name, username, status)`
+        )
+        .eq("status", "posted")
+        .eq("Users.status", "approved")
       .in("id_post", favPosts.length > 0 ? favPosts : [-1])
       .order("created_at", { ascending: false });
 
@@ -60,7 +62,12 @@ function Fav() {
       if (data && data.length === 0) {
         setNoPostsFound(true);
       }
-      setTradeProducts( data?.map((product: any) => ({
+
+      const approvedData = data.filter((product: any) => product.Users?.status === "approved");
+
+
+              
+      setTradeProducts( approvedData.map((product: any) => ({
         type: 'trade',
         id_post: product.id_post,
         title: product.title,
@@ -100,7 +107,7 @@ function Fav() {
         price,
         post_img,
         status,
-        Users:by_userid(acc_name, username)`
+        Users:by_userid(acc_name, username, status)`
       )
       .in("id_post", favPosts.length > 0 ? favPosts : [-1])
       .order("created_at", { ascending: false });
@@ -113,7 +120,9 @@ function Fav() {
       if (data && data.length === 0) {
         setNoPostsFound(true);
       }
-      setSellProducts( data?.map((product: any) => ({
+
+      const approvedData = data.filter((product: any) => product.Users?.status === "approved");
+      setSellProducts( approvedData.map((product: any) => ({
         type: 'sell', 
         id_post: product.id_post,
         title: product.title,

@@ -43,7 +43,7 @@ function ProductTradeDetail() {
            has_flaw,
            by_userid,
            has_want,
-               by_user:by_userid(acc_name, username),
+               by_user:by_userid(acc_name, username, status),
     dealed_user:dealed_userid(acc_name, username)`
         )
         .eq('id_post', id)
@@ -288,7 +288,23 @@ const toggleFavorite = async (id_post: number) => {
         ? <img src={fullfav} alt="Remove Fav" style={{ width: '30px' }} />
         : <img src={nofav} alt="Add Fav" style={{ width: '30px' }} />}
     </button>
-      <button className="btn btn-detail" onClick={openOfferModal} style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '2px' }}  >OFFER</button>
+
+    {product.by_user?.status === "approved" ? (
+  <button 
+    className="btn btn-detail" 
+    onClick={openOfferModal}
+    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '3px' }}>
+    OFFER
+  </button>
+) : (
+  <button 
+    className="btn btn-danger" 
+    disabled
+    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '3px' }}>
+    เจ้าของโพสต์ถูกแบน
+  </button>
+)}
+
     
     
     </div>
@@ -425,6 +441,7 @@ const toggleFavorite = async (id_post: number) => {
                     <textarea
                       className="form-control"
                       value={offerTitle}
+                      placeholder="เช่น 'เจโน่จากอัลบั้มล่าสุดค้าบ'"
                       onChange={(e) => setOfferTitle(e.target.value)}
                       required
                     /></div>
@@ -433,6 +450,7 @@ const toggleFavorite = async (id_post: number) => {
                     <textarea
                       className="form-control"
                       value={offerDescription}
+                      placeholder="เช่น 'การ์ดมีรอยที่มุม ๆ นิดหน่อย เลือกหนูเถอะ'"
                       onChange={(e) => setOfferDescription(e.target.value)}
                       required
                     /></div>
