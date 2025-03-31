@@ -82,7 +82,7 @@ function Admin() {
     }
   };
 
-  const rejecteUser = async (id: string, email: string) => {
+  const rejecteUser = async (id: string) => {
     try {
       const { error } = await supabase
         .from("Users")
@@ -382,7 +382,7 @@ function Admin() {
                   )}
                   {user.status === "waiting" && (
                     <button
-                      onClick={() => rejecteUser(user.id, user.email)}
+                      onClick={() => rejecteUser(user.id)}
                       className="btn btn-outline-danger btn-sm m-1"
                     >
                       reject

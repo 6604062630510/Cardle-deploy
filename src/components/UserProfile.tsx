@@ -14,26 +14,25 @@ function UserProfile() {
   const { username } = useParams();
   const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState<any>(null);
-  useEffect(() => {
-    const storedUser = localStorage.getItem('currentUser');
-    console.log("Current User: ", storedUser);
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
-      
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!username) {
-      navigate("/");
-    } else {
-      fetchUserPosts(username);
-    }
-  }, [username, currentUser]);
+    useEffect(() => {
+      const storedUser = localStorage.getItem('currentUser');
+      console.log("Current User: ", storedUser);
+      if (storedUser) {
+        setCurrentUser(JSON.parse(storedUser));
+      }
+    }, []);
+    
+    useEffect(() => {
+      if (!username) {
+        navigate("/");
+      } else {
+        fetchUserPosts(username);
+      }
+    }, [username]);
 
   const fetchUserPosts = async (username: string) => {
     setLoading(true);
-    setNoPostsFound(false);
+    setNoPostsFound(false); 
     const { data: userData, error: userError } = await supabase
       .from("Users")
       .select("*")
@@ -42,15 +41,21 @@ function UserProfile() {
 
     if (userError || !userData) {
       console.error("Error fetching user:", userError?.message);
-      setNoPostsFound(true);
+     setNoPostsFound(true);
       setLoading(false);
       return;
     }
 
     setUser(userData);
 
-    fetchTradeProducts(userData.id);
-    fetchSellProducts(userData.id);
+    const tradeData = await fetchTradeProducts(userData.id);
+    const sellData = await fetchSellProducts(userData.id);
+    if (tradeData.length === 0 && sellData.length === 0) {
+      setNoPostsFound(true);
+    }
+  
+    setLoading(false);
+
   };
 
   const fetchTradeProducts = async (userId: number) => {
@@ -77,11 +82,10 @@ function UserProfile() {
 
     if (error) {
       console.error("Error fetching trade products:", error.message);
+      return [];
     } else {
-      if (data && data.length === 0) {
-        setNoPostsFound(true);
-      }
-      setTradeProducts( data?.map((product: any) => ({
+      
+     const mappedData = data?.map((product: any) => ({
         type: 'trade', 
         id_post: product.id_post,
         title: product.title,
@@ -95,9 +99,11 @@ function UserProfile() {
         has_want: product.has_want,
         isFavorite: isFavorite(product.id_post),
         onToggleFavorite: (id_post: number) => onToggleFavorite(id_post),
-      })));
+      }));
+      setTradeProducts(mappedData);
+  return mappedData;
     }
-    setLoading(false);
+    
   };
 
   const fetchSellProducts = async (userId: number) => {
@@ -121,11 +127,10 @@ function UserProfile() {
 
     if (error) {
       console.error("Error fetching sell products:", error.message);
+      return [];
     } else {
-      if (data && data.length === 0) {
-        setNoPostsFound(true);
-      }
-      setSellProducts( data?.map((product: any) => ({
+
+      const mappedData = data?.map((product: any) => ({
         type: 'sell', // กำหนด type เป็น 'trade'
         id_post: product.id_post,
         title: product.title,
@@ -138,9 +143,11 @@ function UserProfile() {
         price: product.price,
         isFavorite: isFavorite(product.id_post),
         onToggleFavorite: (id_post: number) => onToggleFavorite(id_post),
-      })));
+      }));
+       setSellProducts(mappedData);
+  return mappedData;
     }
-    setLoading(false);
+    
   };
 
   const isFavorite = (id_post: number) => {
@@ -199,24 +206,27 @@ function UserProfile() {
 
   <div className="d-flex justify-content-center">
     <div className="text-center">
+    {user && (<>
       <h1 className="custom-topic mb-2 acc-name">
         {user?.acc_name || username}
       </h1>
+    
       <h2 className="custom-topic mb-3">
         ( @{username} )
-      </h2>
-
+      </h2></>
+)}
       {user?.about && (
         <h4 className="about-text mx-auto px-3 mt-4 mb-4">
           {user.about}
         </h4>
       )}
 
-      {user?.status !== "approved" && (
-        <h2 className="text-danger fw-bold mx-auto px-3 mt-4 mb-4">
-          {username} ถูกแบน
-        </h2>
-      )}
+{user && user.status !== "approved" && (
+  <h2 className="text-danger fw-bold mx-auto px-3 mt-4 mb-4">
+    {username} ถูกแบน
+  </h2>
+)}
+
     </div>
   </div>
 
