@@ -32,7 +32,7 @@ function Navbar({ brandName, imageSrcPath, navItems }: NavbarProps) {
     const handleLogout = () => {
         localStorage.removeItem("currentUser");
         setCurrentUser(null);
-        navigate("/");
+        navigate("");
         window.location.reload()
     };
 
