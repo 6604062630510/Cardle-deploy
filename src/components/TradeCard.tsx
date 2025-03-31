@@ -1,6 +1,7 @@
 import React from 'react';
 import { TradeCardProps } from './Interface/CardProps';
 import { Link } from 'react-router-dom';
+import fullfav from "../assets/fill-fav-icon.png";
 
 const TradeCard: React.FC<TradeCardProps> = ({
   id_post,
@@ -70,9 +71,9 @@ const TradeCard: React.FC<TradeCardProps> = ({
                 onClick={() => onToggleFavorite(id_post)}
               >
                 {isFavorite ? (
-                  <img src="../assets/emt-fav-icon.png" alt="Remove Fav" style={{ width: '30px' }} />
+                  <img src={fullfav} alt="Remove Fav" style={{ width: '30px' }} />
                 ) : (
-                  <img src="../assets/emt-fav-icon.png" alt="Add Fav" style={{ width: '30px' }} />
+                  <img src="/emt-fav-icon.png" alt="Add Fav" style={{ width: '30px' }} />
                 )}
               </button>
             </div>

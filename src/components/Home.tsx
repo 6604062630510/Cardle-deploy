@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import headImg from "../assets/se-pic 2.svg";
+
 import { supabase } from "../database/client";
 import CardFactory from './CardFactory'; // Import Card component ที่รองรับทั้ง Sell และ Trade
 import { useNavigate} from "react-router-dom";
