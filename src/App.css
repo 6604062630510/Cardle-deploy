@@ -1,0 +1,351 @@
+
+@font-face {
+  font-family: 'MarioFont';
+  src: url('/fonts/SuperMarioBrosNES.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'nomalFont';
+  src: url('/fonts/AvenirNextLTPro-Regular.otf') format('opentype'),
+       url('/fonts/AvenirNextLTPro-It.otf') format('opentype'),
+       url('/fonts/AvenirNextLTPro-Bold.otf') format('opentype');
+  font-weight: normal; /* ใช้กับ Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'nomalFont';
+  src: url('/fonts/AvenirNextLTPro-Bold.otf') format('opentype');
+  font-weight: bold; /* ใช้กับ Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'nomalFont';
+  src: url('/fonts/AvenirNextLTPro-It.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic; /* ใช้กับ Italic */
+}
+@font-face {
+  font-family: 'Ratro';
+  src: url('/fonts/Retro Gaming.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Noto Sans Thai';
+  src: url('/fonts/NotoSansThai-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  unicode-range: U+0E00-0E7F;
+}
+
+
+html, body {
+  font-family: "Noto Sans Thai", sans-serif !important;
+}
+
+.custom-badge {
+  background-color: #dddddd !important; 
+  color: rgb(30, 30, 30) !important;
+}
+
+.custom-badge-want {
+  background-color: #85DFFF !important; 
+  color: rgb(30, 30, 30) !important;
+}
+.navbar-nav .nav-item .nav-link:hover{
+  color: black;
+  background-color: #f0f0f0;
+  
+}
+header .lead{
+  color: #151515;
+  font-size: 150% !important;
+}
+
+header h1{
+  color: #151515 !important;
+}
+
+.custom-topic{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+
+}
+
+.custom-line-height {
+  line-height: 1.8;
+
+}
+
+.navbar-nav{
+  font-family: 'MarioFont', sans-serif !important;
+}
+
+
+.acc-name {
+  max-width: 600px;
+  word-wrap: break-word;
+  white-space: pre-line; 
+}
+
+.about-text {
+  max-width: 600px; 
+  word-wrap: break-word;
+  white-space: pre-line;
+  color: #555;
+}
+
+.Recently-logo {
+  border-radius: 1000px;
+  width: 344px;
+  height: 78px;
+  border: 1px solid #000000;
+  background: #fdee68;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 250% !important;
+}
+
+
+.Fav-logo {
+  font-family: 'MarioFont', sans-serif !important;
+  border-radius: 1000px;
+  width: 365px;
+  height: 99px;
+  border: 1px solid #000000;
+  background: linear-gradient(180deg, #ffffff, #95EA37);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 250% !important;
+}
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  transition: background-color 0.3s ease-in-out;
+}
+.no-link-style {
+  text-decoration: none;
+  color: inherit;
+}
+
+.privacy-policy-page{
+  background: linear-gradient(180deg, #ffffff, #fcf0ff, #ff9e9e);
+}
+
+.admin-page{
+  background: linear-gradient(180deg, #ffffff, #fcf0ff, #e79eff);
+}
+.trade-page {
+  background: linear-gradient(180deg, #ffffff, #fde4f7, #FFCEF6,  #fde4f7, #ffffff);
+}
+.fav-page {
+  background: linear-gradient(180deg, #ffffff,#ffffff, #80AAFE);
+}
+.shop-page{
+  background: linear-gradient(180deg, #ffffff,#effbff, #85DFFF, #ffffff);
+}
+.product-trade-detail-page {
+  background: linear-gradient(180deg, #ffffff, #ffe1f8, #ff89e4);
+}
+.product-sell-detail-page {
+  background: linear-gradient(180deg, #ffffff,#ebf9ff, #85DFFF);
+}
+
+.profile-page{
+  background: linear-gradient(180deg, #ffffff,#fffeef, #F5EEAD, #ffffff);
+}
+.signin-page{
+  background: linear-gradient(180deg, #ffffff,#feffeb, #F5EEAD);
+}
+
+.mydeal-page{
+
+  background: linear-gradient(180deg, #ffffff,#ffebfe, #e385ff);
+}
+
+.create-post-page{
+  background: linear-gradient(180deg, #ffffff,#ffffff, #feffb5);
+}
+.bodyhead{
+  background: linear-gradient(180deg,#ffffff,#f7fcf7 6.5%, #78f27a 100%);
+
+}
+.content-bg {
+  background: linear-gradient(180deg, #ffffff, #d6f4ff, #46ceff);
+
+  min-height: 100vh;
+}
+.btn-detail{
+  background: linear-gradient(180deg, #ffffff, #A9E088);
+  border-color: #000000 !important;
+  color: #000000 !important;   
+
+  border-width: 2px !important;
+}
+.btn-more{
+
+  background: linear-gradient(180deg, #ffffff, #9EE74E);
+  border-color: #73A752 !important;
+  color: #000000 !important;   
+
+  border-width: 3px !important;
+
+}
+
+.btn-more:hover{
+
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+
+}
+
+.btn-fav {
+  color: #000000 !important; 
+  background: transparent !important;
+
+}
+
+.btn-fav-click{
+  color: #000000 !important; 
+  background: transparent !important;
+  border-bottom-color: #000000  !important;
+  border-radius: 0px !important;
+}
+
+
+.btn-fav-unclick{
+  color: #9c9c9c !important; 
+  background: transparent !important;
+  border-bottom: #9c9c9c  !important;
+  border-radius: 0px !important;
+}
+
+.btn-fav-click:active,
+.btn-fav-unclick:active {
+  border-color: transparent !important;
+  background-color: inherit !important;
+  color: inherit !important;
+
+}
+
+.container-fav{
+  border-bottom: solid #9c9c9c !important;
+  border-radius: 0px !important;
+  border-width: 1px !important;
+  z-index: -1;
+  
+}
+.btn:disabled {
+  opacity: 1 !important; 
+}
+.btn-admin {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  background-color: #ffffff !important;
+  border-color: #000000 !important;
+  color: #000000 !important;         
+} 
+
+
+.btn-admin:hover {
+
+  background-color: #aeaeae !important;
+  border-color: #000000 !important;
+  color: #000000 !important;         
+} 
+
+.btn-warn-custom{
+  font-family: 'MarioFont', sans-serif !important;
+  background-color: #fee583 !important;
+  border-color: #000000 !important;
+  color: #000000 !important; 
+}
+
+.btn-warn-custom:hover{
+  border-color: transparent !important;
+  color: #ffffff !important;
+}
+
+.btn-red-custom{
+  font-family: 'MarioFont', sans-serif !important;
+  background-color: #fe8383 !important;
+  border-color: #000000 !important;
+  color: #000000 !important; 
+}
+
+.btn-red-custom:hover{
+  border-color: transparent !important;
+  color: #ffffff !important;
+}
+.btn-dark-custom {
+  font-family: 'MarioFont', sans-serif !important;
+  background-color: #fe83db !important;
+  border-color: #000000 !important;
+  color: #000000 !important; 
+}
+
+.btn-dark-custom:hover {
+
+  border-color: transparent !important;
+  color: #ffffff !important;
+  
+}
+.btn-search {
+  font-family: 'MarioFont', sans-serif !important;
+  background-color: transparent !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.btn-search:hover {
+  background-color: #4ef561 !important;
+  border-color: #000000 !important;
+}
+.btn-custom {
+  font-family: 'MarioFont', sans-serif !important;
+  background-color: transparent !important;
+  color: #000000 !important;
+
+}
+
+.overflow-auto::-webkit-scrollbar {
+  display: none;
+}
+.textCard {
+
+  background: linear-gradient(180deg, #9be3fe 45%, #25c5ff 80.55%);
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+-webkit-text--color: transparent;
+font-family: "Ratro";
+font-size: 100px;
+font-style: normal;
+font-weight: 400;
+-webkit-text-stroke: 1px #000000;
+
+
+}
+
+h1{
+  font-size: 500% !important;
+}
+.text-link{
+  color: #ffffff !important;
+  font-weight: bold;
+  font-size: large;
+}
+
+.btn-custom:hover {
+  background-color: #4ef561 !important;
+  border-color: #000000 !important;
+}
