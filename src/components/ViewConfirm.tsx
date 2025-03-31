@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams} from "react-router-dom";
 import { supabase } from "../database/client";
-
+import contactImg from "../assets/contact.png";
 function ViewConfirm() {
   const { id } = useParams();
   const [buyers, setBuyers] = useState<any[]>([]);
@@ -203,7 +203,7 @@ function ViewConfirm() {
             >
               {buyer.Users?.contact && (
                 <img
-                  src="/contact.png"
+                  src={contactImg}
                   alt="Contact Image"
                   className="img-fluid rounded"
                   style={{

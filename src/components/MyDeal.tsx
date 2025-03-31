@@ -4,6 +4,10 @@ import { PostSellStrategy } from "./StrategyMyDeal/PostSellStrategy";
 import { OfferStrategy } from "./StrategyMyDeal/OfferStrategy";
 import { ShopStrategy } from "./StrategyMyDeal/ShopStrategy";
 import { Link, useNavigate } from "react-router-dom";
+import warn from "../assets/waiting.png";
+import deal from "../assets/dealed.png";
+import reject from "../assets/rejected.png";
+import complete from "../assets/completed.png";
 
 function MyDeal() {
   const [postTrade, setPostTrade] = useState<any[]>([]);
@@ -137,14 +141,14 @@ function MyDeal() {
     <div className="me-3">
     {/* เช็คค่าของ title, offer_title, product_name etc*/}
     {post.type === "shop" ? (
-  <img
+  <img 
     src={ post.status === "waiting"
-      ? "waiting.png"
+      ? warn
       : post.status === "dealed"
-      ? "dealed.png"
+      ? deal
       : post.status === "rejected"
-      ? "rejected.png"
-      : "completed.png"
+      ? reject
+      : complete
 
     }
     alt="Shop Status Image"
