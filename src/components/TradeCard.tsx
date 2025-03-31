@@ -70,9 +70,9 @@ const TradeCard: React.FC<TradeCardProps> = ({
                 onClick={() => onToggleFavorite(id_post)}
               >
                 {isFavorite ? (
-                  <img src="/fill-fav-icon.png" alt="Remove Fav" style={{ width: '30px' }} />
+                  <img src="../assets/emt-fav-icon.png" alt="Remove Fav" style={{ width: '30px' }} />
                 ) : (
-                  <img src="/emt-fav-icon.png" alt="Add Fav" style={{ width: '30px' }} />
+                  <img src="../assets/emt-fav-icon.png" alt="Add Fav" style={{ width: '30px' }} />
                 )}
               </button>
             </div>
