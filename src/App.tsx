@@ -22,7 +22,6 @@ import Fav from "./components/Fav";
 import UserProfile from "./components/UserProfile";
 import EditPro from "./components/EditPro";
 import PrivacyPolicy from "./components/PrivacyPolicy";
-import Report from "./components/Report";
 
 function PageWrapper() {
   const location = useLocation();
@@ -83,7 +82,6 @@ function PageWrapper() {
         <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
         <Route path="/mydeal" element={<MyDeal/>}/>
         <Route path="/learnmore" element={<LearnMore/>}/>
-        <Route path="/report" element={<Report/>}/>
       </Routes>
     </div>
   );

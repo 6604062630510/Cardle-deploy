@@ -2,10 +2,9 @@ import c11 from "../assets/c11.png";
 import c12 from "../assets/c12.png";
 import c13 from "../assets/c13.png";
 import emailpng from "../assets/email.png";
-import { useNavigate } from "react-router-dom";
+
 
 function LearnMore() {
-  const navigate = useNavigate();
 
   return (
     <div className="container my-5">

@@ -79,10 +79,7 @@ function MyDeal() {
     },
   };
   
-  const getAvailableStatuses = (type: string) => {
-    return Object.values(statusMap[type] || {});
-  };
-  
+
   const mapStatusToThai = (type: string, status: string) => {
     return statusMap[type]?.[status] || status;
   };
