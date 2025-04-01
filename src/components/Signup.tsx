@@ -7,9 +7,10 @@ import imgSignUp from "../assets/signup.png";
 import { Link } from "react-router-dom";
 import { useNavigate} from 'react-router-dom';
 function Signup() {
+  const navigate = useNavigate();
   const [isOldEnough, setIsOldEnough] = useState(false);
   const [acceptPolicy, setAcceptPolicy] = useState(false);
-  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -65,7 +66,7 @@ function Signup() {
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
   
-    // ตรวจสอบว่าอายุถึง 15 ปีหรือไม่
+
     setIsOldEnough(age > 15 || (age === 15 && today >= new Date(birthDate.setFullYear(today.getFullYear()))));
     
     setFormData((prevFormData) => ({
@@ -81,17 +82,17 @@ function Signup() {
       return "กรุณากรอกข้อมูลให้ครบถ้วน";
     }
   
-    // ตรวจสอบ username (6-20 ตัวอักษร, ห้ามมีช่องว่างและ =)
-    if (username.length < 5 || username.length > 21 || /[^a-zA-Z0-9]/.test(username) || /\s/.test(username) || /=/.test(username)) {
-      return "Username ต้องมีตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น ยาว 6-20 ตัว และห้ามมีช่องว่างหรือเครื่องหมาย '='";
+    // ตรวจสอบ username (6-20 ตัวอักษร, ห้ามมีช่องว่าง)
+    if (username.length < 5 || username.length > 21 || /[^a-zA-Z0-9]/.test(username) || /\s/.test(username)) {
+      return "Username ต้องมีตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น ยาว 6-20 ตัว และห้ามมีช่องว่าว";
     }
   
-    // ตรวจสอบ accname (3-50 ตัวอักษร, อนุญาตให้มีช่องว่างได้แต่ห้ามมี =)
+    // ตรวจสอบ accname (3-60 ตัวอักษร)
     if (accname.length < 2 || accname.length > 61) {
       return "ชื่อแอคเคาน์ต้องมีความยาว 3-50 ตัวอักษร";
     }
   
-    // ตรวจสอบอีเมล
+    // ตรวจสอบอีเมล ตรวจ @
     if (!/\S+@\S+\.\S+/.test(email)) {
       return "กรุณากรอกอีเมลที่ถูกต้อง";
     }
@@ -321,7 +322,7 @@ if (fullMatchUser) {
               <div className="col-md-6 mb-3">
                 <input
                   className="form-control"
-                  placeholder="Name"
+                  placeholder="ชื่อตามบัตรประชาชน"
                   name="Fname"
                   onChange={handleChange}
                 />
@@ -329,7 +330,7 @@ if (fullMatchUser) {
               <div className="col-md-6 mb-3">
                 <input
                   className="form-control"
-                  placeholder="Lastname"
+                  placeholder="นามสกุลตามบัตรประชาชน"
                   name="lastname"
                   onChange={handleChange}
                 />
@@ -337,23 +338,25 @@ if (fullMatchUser) {
             </div>
             {/* Birthdate */}
             <div className="mb-3">
-  <label className="form-label">Date of Birth</label>
-  <input
-    type="date"
-    name="birthDate"
-    onChange={handleBirthDateChange}
-    className="form-control"
-  />
-  {!isOldEnough && formData.birthDate && (
-    <div className="text-danger mt-1">คุณต้องมีอายุอย่างน้อย 15 ปี</div>
-  )}
-</div>
-
-            <div className="mb-3">
-            <label className="form-label">Contact</label>
-            <textarea className="form-control" name="contact" placeholder="เช่น Twitter : @123asd, Facebook : สมชายเองนะ"onChange={handleChange} required />
-
+              <label className="form-label">Date of Birth</label>
+              <input
+                type="date"
+                name="birthDate"
+                onChange={handleBirthDateChange}
+                className="form-control"
+              />
+              {!isOldEnough && formData.birthDate && (
+                <div className="text-danger mt-1">คุณต้องมีอายุอย่างน้อย 15 ปี</div>
+              )}
             </div>
+
+            {/* Contact */}
+            <div className="mb-3">
+              <label className="form-label">Contact</label>
+              <textarea className="form-control" name="contact" placeholder="เช่น Twitter : @123asd, Facebook : สมชายเองนะ"
+              onChange={handleChange} required />
+            </div>
+
             {/* Upload ID Card Image */}
             <div className="mb-3">
               <label htmlFor="idcardImage" className="form-label fw-bold">
@@ -370,6 +373,7 @@ if (fullMatchUser) {
                 />
               </div>
             </div>
+
             {/* Preview Image */}
             {formData.idcardImage && (
               <div className="mb-3 text-center">
@@ -383,18 +387,18 @@ if (fullMatchUser) {
               </div>
             )}
 
-<div className="form-check mt-3">
-  <input
-    type="checkbox"
-    id="acceptPolicy"
-    className="form-check-input"
-    checked={acceptPolicy}
-    onChange={() => setAcceptPolicy(!acceptPolicy)}
-  />
-  <label className="form-check-label" htmlFor="acceptPolicy">
-    ฉันยอมรับ <Link to="/privacy-policy" target="_blank">นโยบายความเป็นส่วนตัว</Link>
-  </label>
-</div>
+            <div className="form-check mt-3">
+              <input
+                type="checkbox"
+                id="acceptPolicy"
+                className="form-check-input"
+                checked={acceptPolicy}
+                onChange={() => setAcceptPolicy(!acceptPolicy)}
+              />
+              <label className="form-check-label" htmlFor="acceptPolicy">
+                ฉันยอมรับ <Link to="/privacy-policy" target="_blank">นโยบายความเป็นส่วนตัว</Link>
+              </label>
+            </div>
 
             <div className="d-flex justify-content-center mt-3">
               <button className="btn btn-dark-custom" type="submit">
@@ -403,9 +407,9 @@ if (fullMatchUser) {
             </div>
           </form>
           <div className="d-flex justify-content-center align-items-center"  style={{ marginBottom: "10rem" }}>
-          <span>Already have an account? </span>
+            <span>Already have an account? </span>
             <Link to="/signup" className="text-dark fs-5 ms-2">Sign in here!</Link>
-            </div>
+          </div>
         </div>
       </div>
     </div>

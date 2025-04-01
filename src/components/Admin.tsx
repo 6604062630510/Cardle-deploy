@@ -49,7 +49,7 @@ function Admin() {
         // ดึง Signed URL สำหรับรูปภาพ
         const updatedUsers = await Promise.all(
           (data || []).map(async (user: any) => {
-            const signedUrl = await getSignedUrl(user.idcard_pic); // `user.idcard_pic` should be relative, e.g., "idcard_pic/id_cards/..."
+            const signedUrl = await getSignedUrl(user.idcard_pic);
 
             return { ...user, idcard_pic: signedUrl }; // แทนที่ path ด้วย Signed URL
           })
