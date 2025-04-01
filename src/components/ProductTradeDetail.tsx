@@ -41,10 +41,11 @@ function ProductTradeDetail() {
            post_img_i_have,
            post_img_i_want,
            has_flaw,
+           status,
            by_userid,
            has_want,
-               by_user:by_userid(acc_name, username, status),
-    dealed_user:dealed_userid(acc_name, username)`
+            by_user:by_userid(acc_name, username, contact, status),
+            dealed_user:dealed_userid(acc_name, username)`
         )
         .eq('id_post', id)
         .single();
@@ -288,21 +289,25 @@ const toggleFavorite = async (id_post: number) => {
         : <img src={nofav} alt="Add Fav" style={{ width: '30px' }} />}
     </button>
 
-    {product.by_user?.status === "approved" ? (
+
+
+{product.by_user?.status === "approved" && product.status === "posted" ? (
   <button 
     className="btn btn-detail" 
-    onClick={openOfferModal}
-    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '3px' }}>
-    OFFER
+    onClick={openOfferModal} 
+    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '2px' }}
+  >
+    Offer
   </button>
-) : (
+) : product.by_user?.status === "banned" ? (
   <button 
     className="btn btn-danger" 
     disabled
-    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '3px' }}>
+    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '3px' }}
+  >
     เจ้าของโพสต์ถูกแบน
   </button>
-)}
+) : null}
 
     
     

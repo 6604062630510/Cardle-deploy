@@ -28,15 +28,12 @@ function TrackingSell() {
           .select(`
             title,
             statusDeliveryPoster,
-            statusDeliveryOffer,
             by_userid,
             status,
             dealed_userid,
             price,
             deliver_comp_poster,
-            deliver_comp_offer,
             tracking_num_poster,
-            tracking_num_offer,
             by_user:by_userid(acc_name, username),
             dealed_user:dealed_userid(acc_name, username)
           `)
@@ -129,49 +126,20 @@ function TrackingSell() {
             })
             .eq("id_post", id);
           setShowDeliveryInputs(false); // ซ่อนช่องกรอกข้อมูลหลังจากอัปเดต
-        } else if (trackingData.statusDeliveryPoster === "delivered") {
-          // อัปเดตสถานะเป็น "received"
-          await supabase
-            .from("Posts-sell")
-            .update({ statusDeliveryPoster: "received", status: "completed"})
-            .eq("id_post", id);
-        }
+        } 
       } else if (currentUser.id === trackingData.dealed_userid) {
-        if (trackingData.statusDeliveryOffer === "waiting") {
-          // อัปเดตสถานะเป็น "packing"
-          await supabase
-            .from("Posts-sell")
-            .update({ statusDeliveryOffer: "packing" })
-            .eq("id_post", id);
-        } else if (trackingData.statusDeliveryOffer === "packing") {
-          // สร้างช่องอินพุต delivery_comp_offer และ tracking_num_offer
-          if (!deliveryComp || !trackingNum) {
-            alert("กรุณากรอกข้อมูลบริษัทจัดส่งและหมายเลขติดตาม");
-            return;
-          }
-          // บันทึกข้อมูลและอัปเดตสถานะ
-          await supabase
-            .from("Posts-sell")
-            .update({
-              statusDeliveryOffer: "delivered",
-              deliver_comp_offer: deliveryComp,
-              tracking_num_offer: trackingNum,
-            })
-            .eq("id_post", id);
-          setShowDeliveryInputs(false); // ซ่อนช่องกรอกข้อมูลหลังจากอัปเดต
-        } else if (trackingData.statusDeliveryOffer === "delivered") {
+        if (trackingData.statusDeliveryPoster === "delivered") {
           // อัปเดตสถานะเป็น "received"
           await supabase
-            .from("Posts-sell")
-            .update({ statusDeliveryOffer: "received" })
-            .eq("id_post", id);
+          .from("Posts-sell")
+          .update({ statusDeliveryPoster: "received", status: "completed"})
+          .eq("id_post", id);
 
-            await supabase
-            .from("MyShop")
-            .update({ status: "Completed" })
-            .eq("id_post", id);
-        }
-      }
+          await supabase
+          .from("MyShop")
+          .update({ status: "completed" })
+          .eq("id_post", id);
+        }}
     } catch (error) {
       console.error("Error updating tracking status:", error);
     }
@@ -181,9 +149,7 @@ function TrackingSell() {
     if (trackingData && trackingData.statusDeliveryPoster === "packing") {
       setShowDeliveryInputs(true);
     }
-    if (trackingData && trackingData.statusDeliveryOffer === "packing") {
-      setShowDeliveryInputs(true);
-    }
+
   }, [trackingData]);
 
 
@@ -214,7 +180,7 @@ function TrackingSell() {
   </p>
   <div className="d-flex justify-content-center align-items-center mb-5">
     <div className="d-flex align-items-center">
-      {["Waiting", "Packing", "Delivered", "Received"].map((step, index) => (
+      {["Waiting", "Packing", "Delivered"].map((step, index) => (
         <React.Fragment key={`poster-${step}`}>
           <button
             className={`btn px-3 py-2 border-3 fw-bold text-dark ${getButtonColor(trackingData.statusDeliveryPoster, step)}`}
@@ -223,7 +189,7 @@ function TrackingSell() {
           >
             {step}
           </button>
-          {index !== 3 && (
+          {index !== 2 && (
            <div className="mx-2" style={{ width: "40px", height: "2px", borderTop: "3px solid black" }}></div>
 
           )}
@@ -239,18 +205,16 @@ function TrackingSell() {
   </p>
   <div className="d-flex justify-content-center align-items-center mb-5">
     <div className="d-flex align-items-center">
-      {["Waiting", "Packing", "Delivered", "Received"].map((step, index) => (
+      {["Received"].map((step, index) => (
         <React.Fragment key={`offer-${step}`}>
           <button
-            className={`btn px-3 py-2 border-3 fw-bold text-dark ${getButtonColor(trackingData.statusDeliveryOffer, step)}`}
+            className={`btn px-3 py-2 border-3 fw-bold text-dark ${getButtonColor(trackingData.statusDeliveryPoster, step)}`}
             style={{ borderColor: "black", color: "black" }}
             disabled
           >
             {step}
           </button>
-          {index !== 3 && (
-            <div className="mx-2 border border-dark" style={{ width: "40px", height: "2px" }}></div>
-          )}
+
         </React.Fragment>
       ))}
     </div>
@@ -289,16 +253,9 @@ function TrackingSell() {
   </div>
 )}
 
-{trackingData && trackingData.statusDeliveryPoster === "delivered" && (
-  <div className="text-center mb-3">
-    <h5 className=" mb-3"><strong>{trackingData.dealed_user?.acc_name}'s</strong></h5>
-    <p className=" mb-2"><strong>Delivery Company:</strong> {trackingData.deliver_comp_offer || "ข้อมูลบริษัทจัดส่งไม่พบ"}</p>
-    <p><strong>Tracking Number:</strong> {trackingData.tracking_num_offer|| "หมายเลขติดตามไม่พบ"}</p>
-  </div>
-)}
 
-{(currentUser.id === trackingData.by_userid && trackingData.statusDeliveryPoster !== "received") ||
-  (currentUser.id === trackingData.dealed_userid && trackingData.statusDeliveryOffer !== "received") ? (
+{(currentUser.id === trackingData.by_userid && trackingData.statusDeliveryPoster !== "delivered") ||
+  (currentUser.id === trackingData.dealed_userid && trackingData.statusDeliveryPoster === "delivered") ? (
   <div className="d-flex justify-content-center mb-5 mt-3" style={{ width: '100%' }}>
     <button className="btn btn-dark" style={{ width: '20%' }} onClick={handleUpdate}>
       Update

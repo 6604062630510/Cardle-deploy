@@ -287,7 +287,7 @@ function Tracking() {
   </div>
 )}
 
-{trackingData && trackingData.statusDeliveryPoster === "delivered" && (
+{trackingData && trackingData.statusDeliveryOffer === "delivered" && (
   <div className="text-center mb-3">
     <h5 className=" mb-3"><strong>{trackingData.dealed_user?.acc_name}'s</strong></h5>
     <p className=" mb-2"><strong>Delivery Company:</strong> {trackingData.deliver_comp_offer || "ข้อมูลบริษัทจัดส่งไม่พบ"}</p>

@@ -15,12 +15,12 @@ function MyDeal() {
   const [myOffer, setMyOffer] = useState<any[]>([]);
   const [myShop, setMyShop] = useState<any[]>([]);
   const [statusFilter, setStatusFilter] = useState("all");
-  const [typeFilter, setTypeFilter] = useState("post-trade");
+  const [typeFilter, setTypeFilter] = useState("trade");
   const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
 
   const strategyMap: { [key: string]: any } = {
-    "post-trade": new PostTradeStrategy(),
-    "post-sell": new PostSellStrategy(),
+    "trade": new PostTradeStrategy(),
+    "sell": new PostSellStrategy(),
     "offer": new OfferStrategy(),
     "shop": new ShopStrategy(),
   };
@@ -36,9 +36,9 @@ function MyDeal() {
       if (currentUser && currentStrategy) {
         try {
           const data = await currentStrategy.fetchPosts(currentUser.id);
-          if (typeFilter === "post-trade") {
+          if (typeFilter === "trade") {
             setPostTrade(data);
-          } else if (typeFilter === "post-sell") {
+          } else if (typeFilter === "sell") {
             setPostSell(data);
           } else if (typeFilter === "offer") {
             setMyOffer(data);
@@ -126,9 +126,9 @@ function MyDeal() {
               setStatusFilter("all");
             }}
           >
-            <option value="post-trade">โพสต์แลกเปลี่ยนการ์ดของฉัน</option>
+            <option value="trade">โพสต์แลกเปลี่ยนการ์ดของฉัน</option>
             <option value="offer">ข้อเสนอของฉัน</option>
-            <option value="post-sell">โพสต์ขายการ์ดของฉัน</option>
+            <option value="sell">โพสต์ขายการ์ดของฉัน</option>
             <option value="shop">คำสั่งซื้อของฉัน</option>
           </select>
         </div>

@@ -38,6 +38,7 @@ function ProductShopDetail() {
             price,
             post_img,
             status,
+            has_flaw,
 
             by_user:by_userid(acc_name, username, contact, status),
             dealed_user:dealed_userid(acc_name, username)`
@@ -130,7 +131,7 @@ const toggleFavorite = async (id_post: number) => {
   
       const { error: postError } = await supabase
         .from("Posts-sell")
-        .update({ status: "waiting"})
+        .update({ status: "selling"})
         .eq("id_post", id);
       
       if (postError) {
@@ -262,18 +263,24 @@ const toggleFavorite = async (id_post: number) => {
         ? <img src={fullfav} alt="Remove Fav" style={{ width: '30px' }} />
         : <img src={nofav} alt="Add Fav" style={{ width: '30px' }} />}
     </button>
-     
-      {product.by_user?.status === "approved" ? (
-   <button className="btn btn-detail" onClick={openBuyModal} 
-   style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '2px' }}  >BUY</button>
-) : (
+    {product.by_user?.status === "approved" && product.status === "selling" ? (
+  <button 
+    className="btn btn-detail" 
+    onClick={openBuyModal} 
+    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '2px' }}
+  >
+    BUY
+  </button>
+) : product.by_user?.status === "banned" ? (
   <button 
     className="btn btn-danger" 
     disabled
-    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '3px' }}>
+    style={{ fontSize: '30px', padding: '10px 50px', letterSpacing: '3px' }}
+  >
     เจ้าของโพสต์ถูกแบน
   </button>
-)}
+) : null}
+
     
     </div>
     </div>

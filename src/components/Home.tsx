@@ -85,8 +85,8 @@ function Home() {
           hashtags: product.hashtag_i_have || [],
           hashtags_want: product.hashtag_i_want || [],
           has_want: product.has_want,
-          isFavorite: isFavorite(product.id_post),
-          onToggleFavorite: (id_post: number) => onToggleFavorite(id_post), // ส่งฟังก์ชัน
+          isFavorite: isFavorite(product.id_post, "trade"),
+          onToggleFavorite: (id_post: number) => onToggleFavorite(id_post, "trade"), // ส่งฟังก์ชัน
         }))
       );
     }
@@ -138,48 +138,83 @@ function Home() {
           created_at: product.created_at,
           hashtags: product.hashtag || [],
           price: product.price,
-          isFavorite: isFavorite(product.id_post),
-          onToggleFavorite: (id_post: number) => onToggleFavorite(id_post), // ส่งฟังก์ชัน
+          isFavorite: isFavorite(product.id_post,  "sell"),
+          onToggleFavorite: (id_post: number) => onToggleFavorite(id_post, "sell"), // ส่งฟังก์ชัน
         }))
       );
     }
     setLoading(false);
   };
 
-const onToggleFavorite = async (id_post: number) => {
+const onToggleFavorite = async (id_post: number, type: "trade" | "sell") => {
     if (!currentUser) {
         navigate("/signin")
       return;
     }
-    let favPosts: number[] = currentUser.fav_post_trade || [];
-    if (favPosts.includes(id_post)) {
-      // ถ้ามีอยู่แล้ว ให้ลบออก
-      favPosts = favPosts.filter((item) => item !== id_post);
-
-    } else {
-      favPosts.push(id_post);
+    if(type === "trade"){
+      let favPosts: number[] = currentUser.fav_post_trade || [];
+      if (favPosts.includes(id_post)) {
+        // ถ้ามีอยู่แล้ว ให้ลบออก
+        favPosts = favPosts.filter((item) => item !== id_post);
   
-    }
-    const { error } = await supabase
-      .from('Users')
-      .update({ fav_post_trade: favPosts })
-      .eq('id', currentUser.id);
+      } else {
+        favPosts.push(id_post);
+    
+      }
+      const { error } = await supabase
+        .from('Users')
+        .update({ fav_post_trade: favPosts })
+        .eq('id', currentUser.id);
+  
+      if (error) {
+        console.error('Error updating favorites:', error.message);
+        alert('เกิดข้อผิดพลาดในการอัปเดตรายการโปรด');
+      } else {
 
-    if (error) {
-      console.error('Error updating favorites:', error.message);
-      alert('เกิดข้อผิดพลาดในการอัปเดตรายการโปรด');
-    } else {
+        const updatedUser = { ...currentUser, fav_post_trade: favPosts };
+        setCurrentUser(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      }
+    }else {
+      let favPosts: number[] = currentUser.fav_post_sell|| [];
+      if (favPosts.includes(id_post)) {
+        // ถ้ามีอยู่แล้ว ให้ลบออก
+        favPosts = favPosts.filter((item) => item !== id_post);
+  
+      } else {
+        favPosts.push(id_post);
+    
+      }
+      const { error } = await supabase
+        .from('Users')
+        .update({ fav_post_sell: favPosts })
+        .eq('id', currentUser.id);
+  
+      if (error) {
+        console.error('Error updating favorites:', error.message);
+        alert('เกิดข้อผิดพลาดในการอัปเดตรายการโปรด');
+      } else {
 
-      const updatedUser = { ...currentUser, fav_post_trade: favPosts };
-      setCurrentUser(updatedUser);
-      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+        const updatedUser = { ...currentUser, fav_post_sell: favPosts };
+        setCurrentUser(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      }
     }
+    
+
   };
 
-  const isFavorite = (id_post: number) => {
+  const isFavorite = (id_post: number, type: "trade" | "sell") => {
     if (!currentUser) return false;
-    const favPosts: number[] = currentUser.fav_post_trade || [];
+    if(type === "trade"){
+
+   const favPosts: number[] = currentUser.fav_post_trade || [];
     return favPosts.includes(id_post);
+    }else{
+      const favPosts: number[] = currentUser.fav_post_sell || [];
+    return favPosts.includes(id_post);   
+    }
+   
   };
 
   const scroll = (direction: "left" | "right", type: "trade" | "sell") => {

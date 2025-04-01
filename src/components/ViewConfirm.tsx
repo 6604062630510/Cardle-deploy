@@ -25,7 +25,7 @@ function ViewConfirm() {
         if (postError) throw postError;
 
         if (postSell?.by_userid !== currentUser.id) {
-          console.error("You are not authorized to view these offers.");
+
           setBuyers([]);
           return;
         }
@@ -100,7 +100,7 @@ function ViewConfirm() {
         .eq("id", buyerId);
       await supabase
         .from("Posts-sell")
-        .update({ status: "sold", statusDeliveryPoster:"waiting",statusDeliveryOffer:"waiting", dealed_userid: chosenBuyers.by_userid })
+        .update({ status: "sold", statusDeliveryPoster:"waiting", dealed_userid: chosenBuyers.by_userid })
         .eq("id_post", id);
 
       const { data: updatedBuyers, error } = await supabase
@@ -183,16 +183,16 @@ function ViewConfirm() {
       </div>
 
       <div className="list-group">
-        <div className="d-flex flex-wrap justify-content-center">
+        <div className="d-flex flex-column align-text-center">
           {buyers.length > 0 ? (
-            <div className="d-flex flex-wrap justify-content-center">
+            <div className="d-flex flex-column w-100 align-items-center">
               {buyers.map((buyer) => (
                 <div
                   key={buyer.id}
-                  className="card mb-3 p-3 position-relative m-3"
-                  style={{ maxWidth: "45%" }}
+                  className="card mb-3 p-3 position-relative m-3 w-75"
+                  
                 >
-                  <div className="d-flex align-items-start">
+                  <div className="d-flex align-items-start ">
                     <div
                       className="me-3"
                       style={{
@@ -215,15 +215,17 @@ function ViewConfirm() {
                         />
                       )}
                     </div>
-
-                    <div className="card-body d-flex flex-column">
+                    <div className="w-100 p-1 d-flex align-content-between flex-wrap justify-content-end">
+                    <div className="card-body d-flex flex-column mb-5">
                       <h5 className="card-title">
 
                       
                         <strong>{buyer.Users.acc_name.length > 30 ? buyer.Users.acc_name.slice(0, 27) + "..." : buyer.Users.acc_name} (@{buyer.Users?.username})</strong>
                       </h5>
 
-                      <div className="mt-auto d-flex justify-content-end">
+                      
+                    </div>
+                    <div><div className=" d-flex justify-content-end">
                         {buyer.status === "dealed" ? (
                           <button className="btn btn-success" disabled>
                             Chosen
@@ -237,8 +239,7 @@ function ViewConfirm() {
                             Choose this buyer
                           </button>
                         ) : null}
-                      </div>
-                    </div>
+                      </div></div></div>
                   </div>
                 </div>
               ))}

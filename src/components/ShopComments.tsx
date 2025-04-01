@@ -15,7 +15,7 @@ const ShopComments: React.FC<ShopCommentsProps> = ({ id_post, currentUser }) => 
   useEffect(() => {
     const fetchComments = async () => {
         let query = supabase
-          .from("Comment_sell")
+          .from("Comment_shop")
           .select(`
             id, id_post, by_userid, context, created_at,
             Users (acc_name, username)
@@ -54,7 +54,7 @@ const ShopComments: React.FC<ShopCommentsProps> = ({ id_post, currentUser }) => 
 
     setIsSubmitting(true);
 
-    const { error } = await supabase.from("Comment_sell").insert([
+    const { error } = await supabase.from("Comment_shop").insert([
       {
         id_post: id_post,
         by_userid: currentUser.id,
