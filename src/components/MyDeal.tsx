@@ -160,105 +160,103 @@ function MyDeal() {
     <div className="me-3">
     {/* เช็คค่าของ title, offer_title, product_name etc*/}
     {post.type === "shop" ? (
-  <img 
-    src={ post.status === "waiting"
-      ? warn
-      : post.status === "dealed"
-      ? deal
-      : post.status === "rejected"
-      ? reject
-      : complete
+      <img 
+        src={ post.status === "waiting"
+          ? warn
+          : post.status === "dealed"
+          ? deal
+          : post.status === "rejected"
+          ? reject
+          : complete
 
-    }
-    alt="Shop Status Image"
-    className="img-fluid rounded"
-    style={{ width: "150px", height: "120px", objectFit: "contain"}}
-  />
-) : post.type === "trade" || post.type === "sell" ? (
-  <img
-    src={post.pic[0]}
-    alt="Post Image"
-    className="img-fluid rounded"
-    style={{ width: "150px", height: "120px", objectFit: "cover" }}
-  />
-) : post.type === "offer" ? (
-  <img
-    src={post.pic}
-    alt="Offer Image"
-    className="img-fluid rounded"
-    style={{ width: "150px", height: "120px", objectFit: "cover" }}
-  />
-) : (
-  <p>No image available</p>
-)}
+        }
+        alt="Shop Status Image"
+        className="img-fluid rounded"
+        style={{ width: "150px", height: "120px", objectFit: "contain"}}
+      />
+    ) : post.type === "trade" || post.type === "sell" ? (
+          <img
+            src={post.pic[0]}
+            alt="Post Image"
+            className="img-fluid rounded"
+            style={{ width: "150px", height: "120px", objectFit: "cover" }}
+          />
+        ) : post.type === "offer" ? (
+          <img
+            src={post.pic}
+            alt="Offer Image"
+            className="img-fluid rounded"
+            style={{ width: "150px", height: "120px", objectFit: "cover" }}
+          />
+    ) : (
+      <p>No image available</p>
+    )}
 
     </div>
     <div className="flex-grow-1">
-  <div className="d-flex justify-content-between align-items-center">
-    <div>
-    <h5 className="card-title">
-  {post.type === "shop" ? (
-    <>โพสต์ : {post.title?.length > 70 ? post.title.slice(0, 67) + "..." : post.title}</>
-  ) : (
-    <>{post.title?.length > 70 ? post.title.slice(0, 67) + "..." : post.title}</>
-  )}
-</h5>
+    <div className="d-flex justify-content-between align-items-center">
+      <div>
+        <h5 className="card-title">
+          {post.type === "shop" ? (
+            <>โพสต์ : {post.title?.length > 70 ? post.title.slice(0, 67) + "..." : post.title}</>
+          ) : (
+            <>{post.title?.length > 70 ? post.title.slice(0, 67) + "..." : post.title}</>
+          )}
+        </h5>
+        <p className="card-text">
+          {post.description?.length > 80
+            ? post.description.slice(0, 77) + "..."
+            : post.description}
+        </p>
+        <p>● {mapStatusToThai(post.type, post.status)}</p>
 
+        <small className="card-text">
+          {new Date(post.created_at).toLocaleString()}
+        </small>
+      </div>
 
-
-<p className="card-text">
-  {post.description?.length > 80
-    ? post.description.slice(0, 77) + "..."
-    : post.description}
-</p>
-
-
-
-<p>● {mapStatusToThai(post.type, post.status)}</p>
-
-
-      <small className="card-text">
-      {new Date(post.created_at).toLocaleString()}
-</small>
-    </div>
-    {(post.type === "trade" || post.type === "offer") ? (
+    {(post.type === "trade" || post.type === "offer") ? ( //สำหรับโพสต์แลกเปลี่ยยนการ์ดหรือข้อเสนอจะไปหน้ารายละเอียดสินค้าประเภท trade
   <div className="d-grid d-md-block">
     <Link to={`/trade/product/${post.id_post}`} className="text-decoration-none">
       <button className="btn btn-light me-2">
         View Post
       </button>
     </Link>
-
+    {/*เจ้าของโพสต์แลกจะเห็นปุ่มหลังเลือกข้อเสนอแแล้ว ส่วนเจ้าของข้อเสนอจะเห็นเมื่อหลังถูกเลือก (สถานะข้อเสนอและโพสต์เป็น dealed หรือ completed)*/}
     {(post.status !== "waiting" && post.status !== "rejected" && post.status !== "posted")? (
       <Link to={`/trade/product-tracking/${post.id_post}`} className="text-decoration-none">
         <button className="btn btn-warning me-2">Tracking</button>
       </Link>
     ) : null}
-
+    {/*เจ้าของโพสต์จะเลือกข้อเสนอได้ */}
     {post.type === "trade" && (
       <Link to={`/trade/product-offer/${post.id_post}`} className="text-decoration-none">
         <button className="btn btn-primary me-2">View Offer</button>
       </Link>
     )}
   </div>
-) : (
+) : (//สำหรับโพสต์ซื้อขายการ์ดหรือคำสั่งซื้อจะไปหน้ารายละเอียดสินค้าประเภท sell
   <div className="d-grid d-md-block">
     <Link to={`/shop/product/${post.id_post}`} className="text-decoration-none">
       <button className="btn btn-light me-2">
         View Post
       </button>
     </Link>
+
+        {/*เจ้าของคำสั่งซื้อจะเห็นปุ่มหลังถูกยืนยันออเดอร์*/}
     {(post.type === "shop" && post.status !== "waiting" && post.status !== "rejected")&& (
       <Link to={`/shop/product-tracking/${post.id_post}`} className="text-decoration-none">
         <button className="btn btn-warning me-2">Tracking</button>
       </Link>
     )} 
+
+    {/*เจ้าของโพสต์ซื้อขายจะเห็นปุ่มหลังเลือกผู็ขายแล้ว*/}
     {post.status !== "selling" && post.type === "sell" ? (
       <Link to={`/shop/product-tracking/${post.id_post}`} className="text-decoration-none">
       <button className="btn btn-warning me-2">Tracking</button>
     </Link>
     ) : null}
-
+    {/*เจ้าของโพสต์จะเลือกผู้ขายได้ */}
     {(post.type === "sell")&& (
       <Link to={`/shop/product-waiting/${post.id_post}`} className="text-decoration-none">
         <button className="btn btn-primary me-2">View Buyer</button>

@@ -13,7 +13,7 @@ function UserProfile() {
   const [user, setUser] = useState<any>(null);
   const { username } = useParams();
   const navigate = useNavigate();
-    const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
     useEffect(() => {
       const storedUser = localStorage.getItem('currentUser');
       console.log("Current User: ", storedUser);
@@ -214,21 +214,21 @@ function UserProfile() {
       <h2 className="custom-topic mb-3">
         ( @{username} )
       </h2></>
-)}
+      )}
       {user?.about && (
         <h4 className="about-text mx-auto px-3 mt-4 mb-4">
           {user.about}
         </h4>
       )}
 
-{user && user.status !== "approved" && (
-  <h2 className="text-danger fw-bold mx-auto px-3 mt-4 mb-4">
-    {username} ถูกแบน
-  </h2>
-)}
+      {user && user.status !== "approved" && (
+        <h2 className="text-danger fw-bold mx-auto px-3 mt-4 mb-4">
+          {username} ถูกแบน
+        </h2>
+      )}
 
+      </div>
     </div>
-  </div>
 
   {user?.status === "approved" && (
     <>

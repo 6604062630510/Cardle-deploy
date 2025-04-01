@@ -166,7 +166,7 @@ function ViewOffer() {
       <div className="d-flex mb-5 justify-content-between align-items-center">
         <h1 className="custom-topic">The offers of this post</h1>
 
-        {isPostDealed && (
+        {/*isPostDealed && (
           <button
             className="btn btn-danger mt-auto"
             onClick={handleResetOffers}
@@ -174,7 +174,7 @@ function ViewOffer() {
           >
             Reset All Offers
           </button>
-        )}
+        )*/}
       </div>
 
       {offers.length > 0 ? (

@@ -2,15 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import headImg from "../assets/se-pic 2.svg";
 
 import { supabase } from "../database/client";
-import CardFactory from './CardFactory'; // Import Card component ที่รองรับทั้ง Sell และ Trade
+import CardFactory from './CardFactory';
 import { Link, useNavigate} from "react-router-dom";
 
 function Home() {
-  const scrollRefTrade = useRef<HTMLDivElement>(null);  // สำหรับโพสต์เทรด
+  const scrollRefTrade = useRef<HTMLDivElement>(null); 
   const scrollRefSell = useRef<HTMLDivElement>(null);  
   const [tradeProducts, setTradeProducts] = useState<any[]>([]);
   const [sellProducts, setSellProducts] = useState<any[]>([]);
-  //const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [noPostsFound, setNoPostsFound] = useState<boolean>(false);
 
@@ -146,6 +145,7 @@ function Home() {
     }
     setLoading(false);
   };
+
 const onToggleFavorite = async (id_post: number) => {
     if (!currentUser) {
         navigate("/signin")
@@ -230,59 +230,59 @@ const onToggleFavorite = async (id_post: number) => {
           </div>
           
           <div className="container mt-4">
-  <h2 className="text-start mb-4">Trade</h2>
-  <div className="position-relative">
-    <div 
-  ref={scrollRefTrade} 
-  className="trade-container" 
-  style={{
-    display: "flex",
-    flexWrap: "nowrap",
-    gap: "1rem",
-    overflowX: "auto",
-    paddingBottom: "30px",
-    scrollbarWidth: "none"
-  }}
->
-  {tradeProducts.length > 0 ? (
-    tradeProducts.map((product) => (
-      <CardFactory key={product.id_post} {...product} />
-    ))
-  ) : (
-    <p>No trade posts found.</p>
-  )}
-</div>
+            <h2 className="text-start mb-4">Trade</h2>
+            <div className="position-relative">
+              <div 
+            ref={scrollRefTrade} 
+            className="trade-container" 
+            style={{
+              display: "flex",
+              flexWrap: "nowrap",
+              gap: "1rem",
+              overflowX: "auto",
+              paddingBottom: "30px",
+              scrollbarWidth: "none"
+            }}
+          >
+            {tradeProducts.length > 0 ? (
+              tradeProducts.map((product) => (
+                <CardFactory key={product.id_post} {...product} />
+              ))
+            ) : (
+              <p>No trade posts found.</p>
+            )}
+          </div>
 
-    <button onClick={() => scroll("left", "trade")}
-      className="btn btn-dark position-absolute top-50 start-0 translate-middle-y rounded-circle"
-      style={{
-        padding: "10px",
-        left: "-30px",
-        width: "40px",
-        height: "40px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {"<"}
-    </button>
-    <button onClick={() => scroll("right", "trade")}
-      className="btn btn-dark position-absolute top-50 end-0 translate-middle-y rounded-circle"
-      style={{
-        padding: "10px",
-        right: "-30px",
-        width: "40px",
-        height: "40px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {">"}
-    </button>
-  </div>
-</div>
+              <button onClick={() => scroll("left", "trade")}
+                className="btn btn-dark position-absolute top-50 start-0 translate-middle-y rounded-circle"
+                style={{
+                  padding: "10px",
+                  left: "-30px",
+                  width: "40px",
+                  height: "40px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {"<"}
+              </button>
+              <button onClick={() => scroll("right", "trade")}
+                className="btn btn-dark position-absolute top-50 end-0 translate-middle-y rounded-circle"
+                style={{
+                  padding: "10px",
+                  right: "-30px",
+                  width: "40px",
+                  height: "40px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {">"}
+              </button>
+            </div>
+          </div>
 
         </div>
 

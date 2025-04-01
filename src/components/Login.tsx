@@ -133,6 +133,11 @@ function Login() {
                 </button>
               </div>
             </div>
+            <div className="text-center">
+            <label className="form-check-label" htmlFor="acceptPolicy">
+              ลืมรหัสผ่าน ? <Link to="/resetpass" target="_blank">คลิก</Link>
+            </label>
+            </div>
             <div className="d-flex justify-content-center mt-3">
               <button className="btn btn-dark-custom" type="submit">
                 Sign In

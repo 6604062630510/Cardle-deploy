@@ -408,7 +408,7 @@ if (fullMatchUser) {
           </form>
           <div className="d-flex justify-content-center align-items-center"  style={{ marginBottom: "10rem" }}>
             <span>Already have an account? </span>
-            <Link to="/signup" className="text-dark fs-5 ms-2">Sign in here!</Link>
+            <Link to="/signin" className="text-dark fs-5 ms-2">Sign in here!</Link>
           </div>
         </div>
       </div>

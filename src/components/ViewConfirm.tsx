@@ -183,72 +183,72 @@ function ViewConfirm() {
       </div>
 
       <div className="list-group">
-      <div className="d-flex flex-wrap justify-content-center">
-  {buyers.length > 0 ? (
-    <div className="d-flex flex-wrap justify-content-center">
-      {buyers.map((buyer) => (
-        <div
-          key={buyer.id}
-          className="card mb-3 p-3 position-relative m-3"
-          style={{ maxWidth: "45%" }}
-        >
-          <div className="d-flex align-items-start">
-            <div
-              className="me-3"
-              style={{
-                minHeight: "100px",
-                width: "150px",
-                flexShrink: 0,
-              }}
-            >
-              {buyer.Users?.contact && (
-                <img
-                  src={contactImg}
-                  alt="Contact Image"
-                  className="img-fluid rounded"
-                  style={{
-                    width: "100%",
-                    objectFit: "cover",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleContactClick(buyer.Users?.contact)}
-                />
-              )}
+        <div className="d-flex flex-wrap justify-content-center">
+          {buyers.length > 0 ? (
+            <div className="d-flex flex-wrap justify-content-center">
+              {buyers.map((buyer) => (
+                <div
+                  key={buyer.id}
+                  className="card mb-3 p-3 position-relative m-3"
+                  style={{ maxWidth: "45%" }}
+                >
+                  <div className="d-flex align-items-start">
+                    <div
+                      className="me-3"
+                      style={{
+                        minHeight: "100px",
+                        width: "150px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {buyer.Users?.contact && (
+                        <img
+                          src={contactImg}
+                          alt="Contact Image"
+                          className="img-fluid rounded"
+                          style={{
+                            width: "100%",
+                            objectFit: "cover",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => handleContactClick(buyer.Users?.contact)}
+                        />
+                      )}
+                    </div>
+
+                    <div className="card-body d-flex flex-column">
+                      <h5 className="card-title">
+
+                      
+                        <strong>{buyer.Users.acc_name.length > 30 ? buyer.Users.acc_name.slice(0, 27) + "..." : buyer.Users.acc_name} (@{buyer.Users?.username})</strong>
+                      </h5>
+
+                      <div className="mt-auto d-flex justify-content-end">
+                        {buyer.status === "dealed" ? (
+                          <button className="btn btn-success" disabled>
+                            Chosen
+                          </button>
+                        ) : buyer.status !== "rejected" ? (
+                          <button
+                            className="btn btn-primary"
+                            onClick={() => handleChooseBuyer(buyer.id)}
+                            disabled={isProcessing}
+                          >
+                            Choose this buyer
+                          </button>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
+          ) : (
+            <p className="text-center text-muted">ยังไม่มีผู้ซื้อสำหรับโพสต์นี้</p>
+          )}
+      </div>
 
-            <div className="card-body d-flex flex-column">
-              <h5 className="card-title">
-
-              
-                <strong>{buyer.Users.acc_name.length > 30 ? buyer.Users.acc_name.slice(0, 27) + "..." : buyer.Users.acc_name} (@{buyer.Users?.username})</strong>
-              </h5>
-
-              <div className="mt-auto d-flex justify-content-end">
-                {buyer.status === "dealed" ? (
-                  <button className="btn btn-success" disabled>
-                    Chosen
-                  </button>
-                ) : buyer.status !== "rejected" ? (
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleChooseBuyer(buyer.id)}
-                    disabled={isProcessing}
-                  >
-                    Choose this buyer
-                  </button>
-                ) : null}
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
     </div>
-  ) : (
-    <p className="text-center text-muted">ยังไม่มีผู้ซื้อสำหรับโพสต์นี้</p>
-  )}
-</div>
-
-</div>
 
 
 

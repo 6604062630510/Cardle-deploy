@@ -22,6 +22,7 @@ import Fav from "./components/Fav";
 import UserProfile from "./components/UserProfile";
 import EditPro from "./components/EditPro";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import ResetPassword from "./components/ResetPassword";
 
 function PageWrapper() {
   const location = useLocation();
@@ -55,6 +56,8 @@ function PageWrapper() {
     pageClass = "privacy-policy-page";
   }else if (location.pathname === "/learnmore") {
     pageClass = "learn-page"
+  }else if (location.pathname === "/resetpass") {
+    pageClass = "signin-page"
   }
   
   let items = ["Home", "Trade", "Shop", "My Deal"];
@@ -82,6 +85,7 @@ function PageWrapper() {
         <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
         <Route path="/mydeal" element={<MyDeal/>}/>
         <Route path="/learnmore" element={<LearnMore/>}/>
+        <Route path="/resetpass" element={<ResetPassword/>}/>
       </Routes>
     </div>
   );
