@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "../database/client";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import bcrypt from 'bcryptjs';
 
 function ResetPassword() {
@@ -12,6 +12,7 @@ function ResetPassword() {
   const navigate = useNavigate();
 
   const handleVerify = async () => {
+    setLoading(true)
     const { data, error } = await supabase
       .from("Users")
       .select("id")

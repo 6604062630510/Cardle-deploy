@@ -118,7 +118,7 @@ function ViewOffer() {
     }
   };
   
-  const handleResetOffers = async () => {
+  /*const handleResetOffers = async () => {
     const confirmation = window.confirm("Are you sure you want to reset all offers?");
     if (!confirmation) return;
 
@@ -154,10 +154,11 @@ function ViewOffer() {
     } finally {
       setIsProcessing(false);
     }
-  };
+  };*/
 
 
   const isPostDealed = offers.every((offer) => offer.status === "waiting");
+  console.log(isPostDealed)
 
   if (loading) return <p>Loading...</p>;
 
