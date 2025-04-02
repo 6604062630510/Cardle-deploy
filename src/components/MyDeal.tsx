@@ -66,7 +66,7 @@ function MyDeal() {
       "completed": "การขายสมบูรณ์",
     },
     "offer": {
-      "waiting": "รอผู้ขายตัดสินใจ",
+      "offered": "รอผู้ขายตัดสินใจ",
       "dealed": "ดีลแล้ว",
       "rejected": "เอาไว้ครั้งหน้านะ",
       "completed": "การแลกเปลี่ยนสมบูรณ์",
@@ -223,7 +223,7 @@ function MyDeal() {
       </button>
     </Link>
     {/*เจ้าของโพสต์แลกจะเห็นปุ่มหลังเลือกข้อเสนอแแล้ว ส่วนเจ้าของข้อเสนอจะเห็นเมื่อหลังถูกเลือก (สถานะข้อเสนอและโพสต์เป็น dealed หรือ completed)*/}
-    {(post.status !== "waiting" && post.status !== "rejected" && post.status !== "posted")? (
+    {(post.status !== "waiting" && post.status !== "rejected" && post.status !== "posted"  && post.status !== "offered")? (
       <Link to={`/trade/product-tracking/${post.id_post}`} className="text-decoration-none">
         <button className="btn btn-warning me-2">Tracking</button>
       </Link>

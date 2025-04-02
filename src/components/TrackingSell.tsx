@@ -205,18 +205,18 @@ function TrackingSell() {
   </p>
   <div className="d-flex justify-content-center align-items-center mb-5">
     <div className="d-flex align-items-center">
-      {["Received"].map((step, index) => (
-        <React.Fragment key={`offer-${step}`}>
-          <button
-            className={`btn px-3 py-2 border-3 fw-bold text-dark ${getButtonColor(trackingData.statusDeliveryPoster, step)}`}
-            style={{ borderColor: "black", color: "black" }}
-            disabled
-          >
-            {step}
-          </button>
+    {["Received"].map((step) => (
+  <React.Fragment key={`offer-${step}`}>
+    <button
+      className={`btn px-3 py-2 border-3 fw-bold text-dark ${getButtonColor(trackingData.statusDeliveryPoster, step)}`}
+      style={{ borderColor: "black", color: "black" }}
+      disabled
+    >
+      {step}
+    </button>
+  </React.Fragment>
+))}
 
-        </React.Fragment>
-      ))}
     </div>
   </div>
 </div>
@@ -254,7 +254,7 @@ function TrackingSell() {
 )}
 
 
-{(currentUser.id === trackingData.by_userid && trackingData.statusDeliveryPoster !== "delivered") ||
+{(currentUser.id === trackingData.by_userid && trackingData.statusDeliveryPoster !== "delivered" && trackingData.statusDeliveryPoster !== "received") ||
   (currentUser.id === trackingData.dealed_userid && trackingData.statusDeliveryPoster === "delivered") ? (
   <div className="d-flex justify-content-center mb-5 mt-3" style={{ width: '100%' }}>
     <button className="btn btn-dark" style={{ width: '20%' }} onClick={handleUpdate}>

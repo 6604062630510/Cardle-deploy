@@ -207,7 +207,7 @@ function UserProfile() {
   <div className="d-flex justify-content-center">
     <div className="text-center">
     {user && (<>
-      <h1 className="custom-topic mb-2 acc-name">
+      <h1 className="custom-topic-thai mb-2 acc-name">
         {user?.acc_name || username}
       </h1>
     

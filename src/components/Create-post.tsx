@@ -182,6 +182,7 @@ const handleImageChange = async (
         alert("Error submitting trade post: " + error.message);
       } else {
         alert("Trade post submitted successfully!");
+        navigate("/mydeal");
       }
     } else if (postType === "sell") {
       const updatedSellData = {
