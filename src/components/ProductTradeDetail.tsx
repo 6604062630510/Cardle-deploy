@@ -23,6 +23,7 @@ function ProductTradeDetail() {
   useEffect(() => {
     const userData = localStorage.getItem("currentUser");
     if (userData) {
+      console.log(userData)
       setCurrentUser(JSON.parse(userData));
     } 
     const fetchProduct = async () => {
@@ -291,7 +292,7 @@ const toggleFavorite = async (id_post: number) => {
 
 
 
-{product.by_user?.status === "approved" && product.status === "posted" ? (
+{product.by_user?.status === "approved" && product.status === "posted" && product.by_user?.username !== currentUser.username ? (
   <button 
     className="btn btn-detail" 
     onClick={openOfferModal} 
@@ -299,6 +300,7 @@ const toggleFavorite = async (id_post: number) => {
   >
     Offer
   </button>
+  
 ) : product.by_user?.status === "banned" ? (
   <button 
     className="btn btn-danger" 

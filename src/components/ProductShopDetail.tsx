@@ -263,7 +263,7 @@ const toggleFavorite = async (id_post: number) => {
         ? <img src={fullfav} alt="Remove Fav" style={{ width: '30px' }} />
         : <img src={nofav} alt="Add Fav" style={{ width: '30px' }} />}
     </button>
-    {product.by_user?.status === "approved" && product.status === "selling" ? (
+    {product.by_user?.status === "approved" && product.status === "selling" && product.by_user?.username !== currentUser.username  ? (
   <button 
     className="btn btn-detail" 
     onClick={openBuyModal} 
