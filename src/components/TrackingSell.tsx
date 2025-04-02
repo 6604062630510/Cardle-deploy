@@ -128,6 +128,7 @@ function TrackingSell() {
           setShowDeliveryInputs(false); // ซ่อนช่องกรอกข้อมูลหลังจากอัปเดต
         } 
       } else if (currentUser.id === trackingData.dealed_userid) {
+        setShowDeliveryInputs(false);
         if (trackingData.statusDeliveryPoster === "delivered") {
           // อัปเดตสถานะเป็น "received"
           await supabase
@@ -146,7 +147,7 @@ function TrackingSell() {
   };
 
   useEffect(() => {
-    if (trackingData && trackingData.statusDeliveryPoster === "packing") {
+    if (trackingData && trackingData.statusDeliveryPoster === "packing" && currentUser.id === trackingData.by_userid) {
       setShowDeliveryInputs(true);
     }
 
