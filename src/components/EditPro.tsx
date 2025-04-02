@@ -144,7 +144,7 @@ function EditPro() {
           <input type="text" className="form-control" value={verifyData.idcard_num} onChange={(e) => setVerifyData({ ...verifyData, idcard_num: e.target.value })} />
         </div>
         <div className="mb-3">
-          <label>Full Name</label>
+          <label>ชื่อจริง (ไม่ต้องใส่นามสกุล)</label>
           <input type="text" className="form-control" value={verifyData.Fname} onChange={(e) => setVerifyData({ ...verifyData, Fname: e.target.value })} />
         </div>
         <div className="mb-3">
